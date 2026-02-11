@@ -1,215 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>San Valentín</title>
-
-<style>
-body{
-  margin:0;
-  overflow:hidden;
-  background:#000;
-  font-family:Arial, Helvetica, sans-serif;
-  color:white;
-}
-
-#centerHeart{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:80px;
-  cursor:pointer;
-  text-align:center;
-}
-
-#line{
-  position:absolute;
-  bottom:150px;
-  left:50%;
-  height:3px;
-  background:white;
-  width:0;
-  transform:translateX(-50%);
-}
-
-#tree{
-  position:absolute;
-  bottom:150px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-#textContainer{
-  position:absolute;
-  top:120px;
-  left:80px;
-  width:40%;
-  opacity:0;
-}
-
-#timer{
-  position:absolute;
-  bottom:180px;
-  right:80px;
-  font-size:18px;
-  opacity:0;
-}
-
-.heartLeaf{
-  position:absolute;
-  font-size:16px;
-  pointer-events:none;
-}
-
-</style>
+  <meta charset="UTF-8">
+  <title>Para mi todo Shitzel ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div id="centerHeart">
-  ❤️<br>
-  <div style="font-size:20px">San Valentín</div>
+<div id="intro">
+  <div id="heart">❤️</div>
+  <div id="valentin">San Valentín</div>
 </div>
 
-<div id="line"></div>
-<canvas id="tree"></canvas>
-<div id="textContainer"></div>
-<div id="timer"></div>
+<div id="scene" class="hidden">
 
-<script>
-const heart = document.getElementById("centerHeart");
-const line = document.getElementById("line");
-const canvas = document.getElementById("tree");
-const ctx = canvas.getContext("2d");
-const textContainer = document.getElementById("textContainer");
-const timer = document.getElementById("timer");
+  <div id="leftPanel">
+    <div id="dedicatoria"></div>
+  </div>
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+  <div id="rightPanel">
+    <div id="ground"></div>
+    <svg id="treeSVG"></svg>
+    <div id="timerContainer" class="hidden">
+      <div id="timerTitle">Mi amor por ti comenzó hace:</div>
+      <div id="timer"></div>
+    </div>
+  </div>
 
-let treeX = window.innerWidth/2;
-let treeY = window.innerHeight - 150;
+</div>
 
-heart.addEventListener("click", startAnimation);
+<audio id="bgMusic" src="audio.mp3"></audio>
 
-function startAnimation(){
-  heart.style.transition="1s";
-  heart.style.top="70%";
-  heart.style.transform="translate(-50%,0)";
-  growLine();
-}
-
-function growLine(){
-  line.style.transition="1s";
-  line.style.width="80%";
-  setTimeout(growTree,1000);
-}
-
-function growTree(){
-  let height=0;
-  let interval=setInterval(()=>{
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.strokeStyle="brown";
-    ctx.lineWidth=10;
-    ctx.beginPath();
-    ctx.moveTo(treeX,treeY);
-    ctx.lineTo(treeX,treeY-height);
-    ctx.stroke();
-    height+=5;
-    if(height>200){
-      clearInterval(interval);
-      growBranches(treeX,treeY-200,0);
-    }
-  },20);
-}
-
-function growBranches(x,y,depth){
-  if(depth>4) return;
-  for(let i=0;i<2;i++){
-    let angle=(i===0?-1:1)*Math.random()*0.6;
-    let length=60-depth*10;
-    let x2=x+Math.sin(angle)*length;
-    let y2=y-Math.cos(angle)*length;
-    ctx.lineWidth=6-depth;
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.lineTo(x2,y2);
-    ctx.stroke();
-    growBranches(x2,y2,depth+1);
-  }
-  if(depth===0){
-    setTimeout(createHeartLeaves,500);
-  }
-}
-
-function createHeartLeaves(){
-  for(let i=0;i<150;i++){
-    let leaf=document.createElement("div");
-    leaf.className="heartLeaf";
-    leaf.innerHTML="❤️";
-    leaf.style.left=(treeX-150+Math.random()*300)+"px";
-    leaf.style.top=(treeY-350+Math.random()*250)+"px";
-    leaf.style.fontSize=(10+Math.random()*20)+"px";
-    leaf.style.transform=`rotate(${Math.random()*360}deg)`;
-    document.body.appendChild(leaf);
-  }
-  moveTreeRight();
-}
-
-function moveTreeRight(){
-  canvas.style.transition="1.5s";
-  canvas.style.left="70%";
-  setTimeout(()=>{
-    showTimer();
-    writeText();
-  },1500);
-}
-
-function showTimer(){
-  timer.style.opacity=1;
-  updateTimer();
-  setInterval(updateTimer,1000);
-}
-
-function updateTimer(){
-  const startDate=new Date("2023-02-14T00:00:00");
-  const now=new Date();
-  const diff=now-startDate;
-
-  const seconds=Math.floor(diff/1000)%60;
-  const minutes=Math.floor(diff/1000/60)%60;
-  const hours=Math.floor(diff/1000/60/60)%24;
-  const days=Math.floor(diff/1000/60/60/24)%30;
-  const months=Math.floor(diff/1000/60/60/24/30)%12;
-  const years=Math.floor(diff/1000/60/60/24/365);
-
-  timer.innerHTML=`
-  Mi amor por ti comenzó hace:<br>
-  ${years} años ${months} meses ${days} días<br>
-  ${hours} horas ${minutes} minutos ${seconds} segundos
-  `;
-}
-
-function writeText(){
-  textContainer.style.opacity=1;
-  const fullText=`
-  Para ti ❤️<br><br>
-  Desde que llegaste a mi vida todo cambió.<br><br>
-  I love you
-  `;
-  let i=0;
-  let speed=40;
-  let writing=setInterval(()=>{
-    textContainer.innerHTML=fullText.substring(0,i);
-    i++;
-    if(i>fullText.length){
-      clearInterval(writing);
-    }
-  },speed);
-}
-
-</script>
+<script src="script.js"></script>
 </body>
 </html>
