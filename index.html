@@ -1,47 +1,188 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Mi Todo Shitzel</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Para la persona que amo</title>
+
+  <!-- Fuente romántica -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffffff;
+      color: #111;
+      font-family: 'Dancing Script', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* TEXTO */
+    #texto {
+      max-width: 700px;
+      font-size: 28px;
+      text-align: center;
+      white-space: pre-line;
+      z-index: 2;
+    }
+
+    /* ÁRBOL */
+    .tree {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      margin-top: 40px;
+    }
+
+    .trunk {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 40px;
+      height: 120px;
+      background: #4b2e1e;
+      transform: translateX(-50%);
+      border-radius: 10px;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: black;
+      transform: rotate(45deg);
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: black;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes sway {
+      0%,100% { transform: rotate(45deg) translateX(0); }
+      50% { transform: rotate(45deg) translateX(5px); }
+    }
+
+    /* CORAZONES CAYENDO */
+    .falling-heart {
+      position: absolute;
+      top: -20px;
+      font-size: 20px;
+      animation: fall linear infinite;
+      color: black;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    /* BOTÓN */
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-family: inherit;
+      font-size: 20px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-<div id="startScreen">
-  <div id="heartStart">❤</div>
-  <div class="valentin">San Valentín</div>
-</div>
+  <div id="texto"></div>
 
-<div id="mainScene">
+  <!-- ÁRBOL -->
+  <div class="tree">
+    <div class="trunk"></div>
 
-  <div id="leftText">
-    <div id="dedicatoria"></div>
-    <div id="contador"></div>
+    <!-- Corazones como hojas -->
+    <div class="heart" style="top:20px; left:40px;"></div>
+    <div class="heart" style="top:10px; left:90px;"></div>
+    <div class="heart" style="top:40px; left:120px;"></div>
+    <div class="heart" style="top:70px; left:60px;"></div>
+    <div class="heart" style="top:60px; left:100px;"></div>
   </div>
 
-  <div id="rightTree">
-    <div id="ground"></div>
-    <svg id="treeSVG" viewBox="0 0 400 500">
-      <path id="treePath" d="M200 480 
-        Q190 400 200 350
-        Q180 300 200 260
-        Q170 220 200 200
-        Q160 170 200 150
-        Q180 120 200 100
-        Q220 120 200 150
-        Q240 170 200 200
-        Q230 220 200 260
-        Q220 300 200 350
-        Q210 400 200 480" />
-    </svg>
-  </div>
+  <!-- Música -->
+  <button onclick="playMusic()">▶ Reproducir música</button>
 
-</div>
+  <iframe
+    id="music"
+    width="0"
+    height="0"
+    src="https://www.youtube.com/embed/0ZqF8K0nZ0E?enablejsapi=1"
+    allow="autoplay">
+  </iframe>
 
-<audio id="music" src="music.mp3"></audio>
+  <script>
+    // TEXTO CON ANIMACIÓN
+    const texto = `Para la persona que me hizo recordar qué se siente el amor:
 
-<script src="script.js"></script>
+Si me dieran a elegir el lugar para estar el resto de mi vida,
+sería abrazado a tu cuerpo,
+viéndonos a los ojos,
+por toda la eternidad.`;
+
+    let i = 0;
+    const contenedor = document.getElementById("texto");
+
+    function escribir() {
+      if (i < texto.length) {
+        contenedor.innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(escribir, 50);
+      }
+    }
+    escribir();
+
+    // CORAZONES CAYENDO
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "falling-heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }, 400);
+
+    // MÚSICA
+    function playMusic() {
+      const iframe = document.getElementById("music");
+      iframe.src += "&autoplay=1";
+    }
+  </script>
+
 </body>
 </html>
