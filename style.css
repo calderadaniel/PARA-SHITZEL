@@ -1,119 +1,117 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+body {
+    margin: 0;
+    padding: 0;
+    background: #f5d0be;
+    font-family: 'Quicksand', sans-serif;
+    overflow: hidden;
 }
 
-body{
-background:#ffd9c8;
-overflow:hidden;
-font-family:'Playfair Display', serif;
+.container {
+    display: flex;
+    height: 100vh;
+    padding: 60px;
+    box-sizing: border-box;
 }
 
-.hidden{
-display:none;
+.left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/* INTRO */
-
-#intro{
-position:absolute;
-width:100%;
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+h1 {
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 30px;
 }
 
-#heart{
-font-size:90px;
-cursor:pointer;
-transition:transform .3s;
+p {
+    font-size: 20px;
+    line-height: 1.8;
+    margin: 20px 0;
 }
 
-#heart:hover{
-transform:scale(1.1);
+.firma {
+    margin-top: 30px;
+    font-weight: 600;
 }
 
-#valentin{
-margin-top:15px;
-font-size:28px;
+.contador {
+    margin-top: 50px;
+    font-size: 18px;
 }
 
-/* SCENE */
-
-#scene{
-width:100%;
-height:100vh;
-display:flex;
+#timer {
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 10px;
 }
 
-#leftPanel{
-width:50%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding:60px;
+.right {
+    width: 50%;
+    position: relative;
 }
 
-#rightPanel{
-width:50%;
-position:relative;
-overflow:hidden;
+.tree {
+    position: absolute;
+    bottom: 0;
+    right: 120px;
 }
 
-#ground{
-position:absolute;
-bottom:40px;
-left:50%;
-width:0%;
-height:8px;
-background:black;
-transform:translateX(-50%);
+.trunk {
+    width: 35px;
+    height: 220px;
+    background: #8b5a2b;
+    margin: 0 auto;
 }
 
-#treeSVG{
-position:absolute;
-bottom:48px;
-width:100%;
-height:80%;
-transition:transform 1s ease;
+.hearts {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-bottom: -50px;
 }
 
-#timerBox{
-position:absolute;
-bottom:100px;
-right:60px;
-text-align:center;
+.heart {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 3s infinite ease-in-out alternate;
 }
 
-#timerTitle{
-font-size:20px;
-margin-bottom:10px;
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: inherit;
+    border-radius: 50%;
 }
 
-#timer{
-font-size:22px;
+.heart::before {
+    top: -9px;
+    left: 0;
 }
 
-/* TEXT */
-
-#textContainer{
-font-family:'Great Vibes', cursive;
-font-size:34px;
-line-height:1.5;
-white-space:pre-line;
+.heart::after {
+    left: -9px;
+    top: 0;
 }
 
-/* Falling leaves */
-
-.falling{
-position:absolute;
-animation:fall 6s linear forwards;
+@keyframes float {
+    from { transform: rotate(45deg) translateY(0px); }
+    to { transform: rotate(45deg) translateY(-10px); }
 }
 
-@keyframes fall{
-0%{transform:translate(0,0) rotate(0deg);}
-100%{transform:translate(-300px,600px) rotate(180deg);}
+.linea {
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background: black;
 }
