@@ -1,134 +1,120 @@
-const startHeart = document.getElementById("startHeart");
 const startScreen = document.getElementById("startScreen");
-const scene = document.getElementById("scene");
+const heartStart = document.getElementById("heartStart");
+const mainScene = document.getElementById("mainScene");
 const ground = document.getElementById("ground");
 const treePath = document.getElementById("treePath");
-const treeContainer = document.getElementById("treeContainer");
-const heartsContainer = document.getElementById("heartsContainer");
+const treeSVG = document.getElementById("treeSVG");
 const music = document.getElementById("music");
-const timer = document.getElementById("timer");
-const letter = document.getElementById("letter");
+const contador = document.getElementById("contador");
+const dedicatoria = document.getElementById("dedicatoria");
 
-startHeart.addEventListener("click", () => {
-
-    // TRANSFORM TO CIRCLE
-    startHeart.style.borderRadius="50%";
-    startHeart.style.transform="none";
-    startHeart.style.width="60px";
-    startHeart.style.height="60px";
-
-    // DRAW GROUND BEFORE TOUCH
-    setTimeout(()=>{
-        ground.style.transition="1s ease";
-        ground.style.width="100%";
-    },300);
-
-    // FALL
-    startHeart.style.position="absolute";
-    startHeart.style.top="40%";
-
-    setTimeout(()=>{
-        startHeart.style.transition="1s ease-in";
-        startHeart.style.top="80%";
-    },300);
-
-    setTimeout(()=>{
-        startScreen.style.display="none";
-        scene.style.display="block";
-        startAnimation();
-    },1400);
+heartStart.addEventListener("click", () => {
+  heartStart.classList.add("drop");
+  setTimeout(() => {
+    startScreen.style.display = "none";
+    mainScene.style.display = "flex";
+    startAnimation();
+  }, 1000);
 });
 
-function startAnimation(){
+function startAnimation() {
 
-    // MUSIC
-    music.currentTime=0;
-    music.volume=0;
-    music.play();
+  setTimeout(() => {
+    ground.classList.add("showGround");
+  }, 300);
 
-    let fadeIn = setInterval(()=>{
-        if(music.volume < 1){
-            music.volume += 0.05;
-        } else clearInterval(fadeIn);
-    },200);
+  setTimeout(() => {
+    treePath.classList.add("drawTree");
+  }, 1200);
 
-    // DRAW TREE
-    treePath.style.transition="3s ease";
-    treePath.style.strokeDashoffset="0";
+  setTimeout(() => {
+    createHearts();
+  }, 5000);
 
-    setTimeout(()=>{
-        createHeartLeaves();
-    },3000);
+  setTimeout(() => {
+    treeSVG.classList.add("moveRight");
+    showCounter();
+  }, 9000);
 
-    setTimeout(()=>{
-        treeContainer.style.left="65%";
-        showTimer();
-        writeLetter();
-    },6000);
-}
+  setTimeout(() => {
+    typeText();
+  }, 11000);
 
-function createHeartLeaves(){
-    for(let i=0;i<120;i++){
-        let heart=document.createElement("div");
-        heart.className="heartLeaf";
-        heart.innerHTML="❤";
-        heart.style.color=randomColor();
-        heart.style.left=Math.random()*200+"px";
-        heart.style.top=Math.random()*200+"px";
-        heart.style.fontSize=(14+Math.random()*20)+"px";
-        heart.style.transform=`rotate(${Math.random()*360}deg)`;
-        heartsContainer.appendChild(heart);
+  music.play();
+  music.volume = 0;
+  let fade = setInterval(()=>{
+    if(music.volume < 1){
+      music.volume += 0.05;
+    } else {
+      clearInterval(fade);
     }
+  },200);
 }
 
-function randomColor(){
-    const colors=["#ff4d6d","#ff758f","#ff8fa3","#ffb3c1","#fb6f92"];
-    return colors[Math.floor(Math.random()*colors.length)];
-}
+function createHearts(){
+  for(let i=0;i<60;i++){
+    let heart = document.createElement("div");
+    heart.classList.add("leaf");
+    heart.style.left = (150 + Math.random()*100)+"px";
+    heart.style.top = (100 + Math.random()*200)+"px";
+    heart.style.background = randomPink();
+    heart.style.transform = `rotate(${Math.random()*360}deg) scale(${0.5+Math.random()})`;
+    document.getElementById("rightTree").appendChild(heart);
 
-function showTimer(){
-    const startDate=new Date("2023-01-01T00:00:00");
-
-    setInterval(()=>{
-        const now=new Date();
-        const diff=now-startDate;
-
-        const days=Math.floor(diff/(1000*60*60*24));
-        const hours=Math.floor(diff/(1000*60*60)%24);
-        const minutes=Math.floor(diff/(1000*60)%60);
-        const seconds=Math.floor(diff/1000%60);
-
-        timer.innerHTML=`
-        Mi amor por ti comenzó hace:<br>
-        <strong>${days}</strong> días 
-        ${hours} horas 
-        ${minutes} minutos 
-        ${seconds} segundos
-        `;
-    },1000);
-}
-
-function writeLetter(){
-    const text=`Para el amor de mi vida:
-
-Si pudiera elegir un lugar seguro,
-sería a tu lado.
-
-Cuanto más tiempo estoy contigo,
-más te amo.
-
-— I Love You!`;
-
-    let i=0;
-    let speed=40;
-
-    function typing(){
-        if(i<text.length){
-            letter.innerHTML+=text.charAt(i);
-            i++;
-            setTimeout(typing,speed);
-        }
+    if(i%3===0){
+      setTimeout(()=> fallHeart(heart), 8000 + Math.random()*5000);
     }
+  }
+}
 
-    typing();
+function fallHeart(el){
+  el.classList.add("fall");
+}
+
+function randomPink(){
+  const colors = ["#ff9eb5","#ff7fa5","#ffb3c7","#ff6f91","#ff8fab"];
+  return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function showCounter(){
+  const startDate = new Date("2021-04-12T00:00:00");
+  setInterval(()=>{
+    const now = new Date();
+    let diff = now - startDate;
+
+    let seconds = Math.floor(diff/1000);
+    let minutes = Math.floor(seconds/60);
+    let hours = Math.floor(minutes/60);
+    let days = Math.floor(hours/24);
+    let years = Math.floor(days/365);
+    let months = Math.floor((days%365)/30);
+
+    contador.innerHTML = `
+    <div class="counterBox">Mi amor por ti comenzó hace:</div>
+    <div class="time">
+    ${years} años ${months} meses ${days%30} días
+    ${hours%24}h ${minutes%60}m ${seconds%60}s
+    </div>`;
+  },1000);
+}
+
+function typeText(){
+  const text = `PARA MI TODO SHITZEL
+
+Para la persona que me hizo recordar cómo se siente el amor:
+
+Si me dieran a elegir el lugar para estar el resto de mi vida,
+sería abrazado a tu cuerpo,
+viéndonos a los ojos por toda la eternidad.
+
+P.D. I love you ❤️`;
+
+  let i=0;
+  let interval = setInterval(()=>{
+    dedicatoria.innerHTML += text[i];
+    i++;
+    if(i>=text.length){
+      clearInterval(interval);
+    }
+  },50);
 }
