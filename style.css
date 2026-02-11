@@ -1,6 +1,95 @@
-body {
+* {
   margin: 0;
-  background: #000;
-  color: white;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Brush Script MT', cursive;
+}
+
+body {
+  background: #f8dfe6;
+  overflow: hidden;
+}
+
+/* INTRO */
+
+#intro {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#heart {
+  font-size: 80px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#heart:hover {
+  transform: scale(1.1);
+}
+
+#valentin {
+  margin-top: 10px;
+  font-size: 28px;
+  color: #333;
+}
+
+/* ESCENA */
+
+.hidden {
+  display: none;
+}
+
+#scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+#leftPanel {
+  width: 50%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#rightPanel {
+  width: 50%;
+  position: relative;
+}
+
+#ground {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  height: 6px;
+  background: black;
+}
+
+#treeSVG {
+  position: absolute;
+  bottom: 46px;
+  width: 100%;
+  height: 80%;
+}
+
+#timerContainer {
+  position: absolute;
+  bottom: 80px;
+  right: 40px;
+  text-align: center;
+}
+
+#timerTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#timer {
+  font-size: 22px;
 }
