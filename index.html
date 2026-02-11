@@ -3,16 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Para el amor de mi vida</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
-<div class="container">
+<!-- CORAZÓN INICIAL -->
+<div id="startScreen">
+    <div id="heartButton"></div>
+</div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="container hidden">
 
     <div class="left">
         <h1>Para el amor de mi vida:</h1>
@@ -38,7 +42,7 @@
     <div class="right">
         <div class="tree">
             <div class="trunk"></div>
-            <div class="hearts"></div>
+            <div class="canopy" id="canopy"></div>
         </div>
     </div>
 
