@@ -1,32 +1,60 @@
-// ===== MÚSICA =====
-document.body.addEventListener("click", function() {
-    document.getElementById("music").play();
-}, { once: true });
+const heartBtn = document.getElementById("heartButton");
+const startScreen = document.getElementById("startScreen");
+const container = document.querySelector(".container");
+const music = document.getElementById("music");
+
+heartBtn.addEventListener("click", () => {
+
+    music.play().catch(() => {});
+
+    heartBtn.classList.add("circle");
+
+    setTimeout(() => {
+        heartBtn.classList.add("fall");
+    }, 400);
+
+    setTimeout(() => {
+        startScreen.style.display = "none";
+        container.classList.remove("hidden");
+        createTree();
+    }, 1800);
+});
 
 
-// ===== CREAR ÁRBOL DE CORAZONES =====
-const heartsContainer = document.querySelector(".hearts");
+/* ===== CREAR ÁRBOL REAL EN FORMA DE CORAZÓN ===== */
+function createTree() {
 
-for (let i = 0; i < 120; i++) {
+    const canopy = document.getElementById("canopy");
 
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
+    for (let i = 0; i < 180; i++) {
 
-    heart.style.left = Math.random() * 260 + "px";
-    heart.style.top = Math.random() * 260 + "px";
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
 
-    heart.style.background = 
-        ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c6", "#ffccd5"]
-        [Math.floor(Math.random() * 5)];
+        const t = Math.random() * Math.PI * 2;
 
-    heart.style.animationDuration = (2 + Math.random() * 2) + "s";
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = 13 * Math.cos(t) 
+                - 5 * Math.cos(2*t) 
+                - 2 * Math.cos(3*t) 
+                - Math.cos(4*t);
 
-    heartsContainer.appendChild(heart);
+        const scale = 12;
+
+        heart.style.left = 180 + x * scale + "px";
+        heart.style.top = 160 - y * scale + "px";
+
+        heart.style.background =
+            ["#ff4d6d","#ff758f","#ff8fa3","#ffb3c6","#ffccd5"]
+            [Math.floor(Math.random()*5)];
+
+        canopy.appendChild(heart);
+    }
 }
 
 
-// ===== TEMPORIZADOR =====
-const startDate = new Date("2023-01-01T00:00:00"); // CAMBIA ESTA FECHA
+/* ===== TEMPORIZADOR ===== */
+const startDate = new Date("2023-01-01T00:00:00");
 
 function updateTimer() {
 
