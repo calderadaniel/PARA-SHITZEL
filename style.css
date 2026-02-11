@@ -1,151 +1,126 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: #f5d0be;
-    font-family: 'Quicksand', sans-serif;
-    overflow: hidden;
+    margin:0;
+    background:#f4cbb8;
+    overflow:hidden;
+    font-family: 'Playfair Display', serif;
 }
 
-/* ===== PANTALLA INICIAL ===== */
+/* START SCREEN */
+
 #startScreen {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #f5d0be;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#f4cbb8;
+    z-index:10;
 }
 
-#heartButton {
-    width: 120px;
-    height: 120px;
-    background: #ff4d6d;
-    transform: rotate(45deg);
-    cursor: pointer;
-    transition: 0.4s ease;
-    position: relative;
+#startHeart {
+    width:100px;
+    height:90px;
+    background:#ff4d6d;
+    position:relative;
+    transform:rotate(-45deg);
+    cursor:pointer;
+    transition:0.3s;
 }
 
-#heartButton::before,
-#heartButton::after {
-    content: "";
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background: #ff4d6d;
-    border-radius: 50%;
+#startHeart:before,
+#startHeart:after {
+    content:"";
+    width:100px;
+    height:90px;
+    background:#ff4d6d;
+    border-radius:50%;
+    position:absolute;
 }
 
-#heartButton::before { top: -60px; left: 0; }
-#heartButton::after { left: -60px; top: 0; }
+#startHeart:before { top:-50px; left:0; }
+#startHeart:after { left:50px; top:0; }
 
-#heartButton.circle {
-    border-radius: 50%;
-    transform: rotate(0deg);
+.startText {
+    margin-top:20px;
+    font-size:28px;
+    font-family:'Pinyon Script', cursive;
 }
 
-#heartButton.fall {
-    animation: drop 1.8s ease forwards;
+/* SCENE */
+
+#scene {
+    display:none;
+    width:100%;
+    height:100vh;
+    position:relative;
 }
 
-@keyframes drop {
-    to {
-        transform: translateY(600px);
-        opacity: 0;
-    }
+/* LINEA */
+
+#ground {
+    position:absolute;
+    bottom:60px;
+    height:4px;
+    background:black;
+    width:0;
+    left:50%;
+    transform:translateX(-50%);
 }
 
-/* ===== CONTENIDO ===== */
-.hidden { display: none; }
+/* TREE */
 
-.container {
-    display: flex;
-    height: 100vh;
-    padding: 60px;
-    box-sizing: border-box;
+#treeContainer {
+    position:absolute;
+    bottom:60px;
+    left:50%;
+    transform:translateX(-50%);
+    transition:1.5s ease;
 }
 
-.left {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#treeSVG {
+    width:300px;
+    height:400px;
 }
 
-h1 {
-    font-weight: 600;
-    font-size: 28px;
-    margin-bottom: 30px;
+#treePath {
+    fill:none;
+    stroke:#8b5a2b;
+    stroke-width:8;
+    stroke-linecap:round;
+    stroke-dasharray:1000;
+    stroke-dashoffset:1000;
 }
 
-p {
-    font-size: 20px;
-    line-height: 1.8;
-    margin: 20px 0;
+/* HEART LEAVES */
+
+.heartLeaf {
+    position:absolute;
+    font-size:18px;
+    animation:float 6s linear infinite;
 }
 
-.firma {
-    margin-top: 30px;
-    font-weight: 600;
+@keyframes float {
+    0% { transform:translate(0,0) rotate(0deg); opacity:1;}
+    100% { transform:translate(-200px,400px) rotate(180deg); opacity:0;}
 }
 
-.contador {
-    margin-top: 50px;
-    font-size: 18px;
+/* TEXT */
+
+#textContainer {
+    position:absolute;
+    left:10%;
+    top:20%;
+    width:35%;
 }
 
 #timer {
-    font-size: 26px;
-    font-weight: 600;
-    margin-top: 10px;
+    font-size:22px;
+    margin-bottom:20px;
 }
 
-.right {
-    width: 50%;
-    position: relative;
+#letter {
+    font-size:22px;
+    line-height:1.6;
 }
-
-.tree {
-    position: absolute;
-    bottom: 0;
-    right: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.trunk {
-    width: 40px;
-    height: 240px;
-    background: #8b5a2b;
-}
-
-.canopy {
-    position: relative;
-    width: 360px;
-    height: 320px;
-    margin-bottom: -40px;
-}
-
-/* Corazones del árbol */
-.heart {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    transform: rotate(45deg);
-}
-
-.heart::before,
-.heart::after {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: inherit;
-    border-radius: 50%;
-}
-
-.heart::before { top: -9px; left: 0; }
-.heart::after { left: -9px; top: 0; }
