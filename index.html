@@ -3,41 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para mi todo Shitzel ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<title>Para el amor de mi vida</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-<div id="intro">
-  <div id="heart">❤</div>
-  <div id="valentin">San Valentín</div>
-</div>
+<div class="container">
 
-<div id="scene" class="hidden">
+    <div class="left">
+        <h1>Para el amor de mi vida:</h1>
 
-  <div id="leftPanel">
-    <div id="textContainer"></div>
-  </div>
+        <p>
+            Si pudiera elegir un lugar seguro,<br>
+            sería a tu lado.
+        </p>
 
-  <div id="rightPanel">
+        <p>
+            Cuanto más tiempo estoy contigo,<br>
+            más te amo.
+        </p>
 
-    <div id="ground"></div>
+        <p class="firma">— I Love You!</p>
 
-    <svg id="treeSVG" viewBox="0 0 600 800"></svg>
-
-    <div id="timerBox" class="hidden">
-      <div id="timerTitle">Mi amor por ti comenzó hace:</div>
-      <div id="timer"></div>
+        <div class="contador">
+            Mi amor por ti comenzó hace...
+            <div id="timer"></div>
+        </div>
     </div>
 
-  </div>
+    <div class="right">
+        <div class="tree">
+            <div class="trunk"></div>
+            <div class="hearts"></div>
+        </div>
+    </div>
 
 </div>
 
-<audio id="bgMusic" src="audio.mp3"></audio>
+<audio id="music" src="musica.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
