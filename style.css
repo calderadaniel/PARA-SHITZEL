@@ -1,95 +1,119 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Brush Script MT', cursive;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-body {
-  background: #f8dfe6;
-  overflow: hidden;
+body{
+background:#ffd9c8;
+overflow:hidden;
+font-family:'Playfair Display', serif;
+}
+
+.hidden{
+display:none;
 }
 
 /* INTRO */
 
-#intro {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+#intro{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
-#heart {
-  font-size: 80px;
-  cursor: pointer;
-  transition: transform 0.3s;
+#heart{
+font-size:90px;
+cursor:pointer;
+transition:transform .3s;
 }
 
-#heart:hover {
-  transform: scale(1.1);
+#heart:hover{
+transform:scale(1.1);
 }
 
-#valentin {
-  margin-top: 10px;
-  font-size: 28px;
-  color: #333;
+#valentin{
+margin-top:15px;
+font-size:28px;
 }
 
-/* ESCENA */
+/* SCENE */
 
-.hidden {
-  display: none;
+#scene{
+width:100%;
+height:100vh;
+display:flex;
 }
 
-#scene {
-  width: 100%;
-  height: 100vh;
-  display: flex;
+#leftPanel{
+width:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:60px;
 }
 
-#leftPanel {
-  width: 50%;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+#rightPanel{
+width:50%;
+position:relative;
+overflow:hidden;
 }
 
-#rightPanel {
-  width: 50%;
-  position: relative;
+#ground{
+position:absolute;
+bottom:40px;
+left:50%;
+width:0%;
+height:8px;
+background:black;
+transform:translateX(-50%);
 }
 
-#ground {
-  position: absolute;
-  bottom: 40px;
-  width: 100%;
-  height: 6px;
-  background: black;
+#treeSVG{
+position:absolute;
+bottom:48px;
+width:100%;
+height:80%;
+transition:transform 1s ease;
 }
 
-#treeSVG {
-  position: absolute;
-  bottom: 46px;
-  width: 100%;
-  height: 80%;
+#timerBox{
+position:absolute;
+bottom:100px;
+right:60px;
+text-align:center;
 }
 
-#timerContainer {
-  position: absolute;
-  bottom: 80px;
-  right: 40px;
-  text-align: center;
+#timerTitle{
+font-size:20px;
+margin-bottom:10px;
 }
 
-#timerTitle {
-  font-size: 20px;
-  margin-bottom: 10px;
+#timer{
+font-size:22px;
 }
 
-#timer {
-  font-size: 22px;
+/* TEXT */
+
+#textContainer{
+font-family:'Great Vibes', cursive;
+font-size:34px;
+line-height:1.5;
+white-space:pre-line;
+}
+
+/* Falling leaves */
+
+.falling{
+position:absolute;
+animation:fall 6s linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translate(0,0) rotate(0deg);}
+100%{transform:translate(-300px,600px) rotate(180deg);}
 }
