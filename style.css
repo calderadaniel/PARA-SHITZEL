@@ -6,6 +6,60 @@ body {
     overflow: hidden;
 }
 
+/* ===== PANTALLA INICIAL ===== */
+#startScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #f5d0be;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#heartButton {
+    width: 120px;
+    height: 120px;
+    background: #ff4d6d;
+    transform: rotate(45deg);
+    cursor: pointer;
+    transition: 0.4s ease;
+    position: relative;
+}
+
+#heartButton::before,
+#heartButton::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: #ff4d6d;
+    border-radius: 50%;
+}
+
+#heartButton::before { top: -60px; left: 0; }
+#heartButton::after { left: -60px; top: 0; }
+
+#heartButton.circle {
+    border-radius: 50%;
+    transform: rotate(0deg);
+}
+
+#heartButton.fall {
+    animation: drop 1.8s ease forwards;
+}
+
+@keyframes drop {
+    to {
+        transform: translateY(600px);
+        opacity: 0;
+    }
+}
+
+/* ===== CONTENIDO ===== */
+.hidden { display: none; }
+
 .container {
     display: flex;
     height: 100vh;
@@ -57,29 +111,30 @@ p {
     position: absolute;
     bottom: 0;
     right: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .trunk {
-    width: 35px;
-    height: 220px;
+    width: 40px;
+    height: 240px;
     background: #8b5a2b;
-    margin: 0 auto;
 }
 
-.hearts {
+.canopy {
     position: relative;
-    width: 300px;
-    height: 300px;
-    margin-bottom: -50px;
+    width: 360px;
+    height: 320px;
+    margin-bottom: -40px;
 }
 
+/* Corazones del árbol */
 .heart {
     position: absolute;
     width: 18px;
     height: 18px;
-    background: red;
     transform: rotate(45deg);
-    animation: float 3s infinite ease-in-out alternate;
 }
 
 .heart::before,
@@ -92,26 +147,5 @@ p {
     border-radius: 50%;
 }
 
-.heart::before {
-    top: -9px;
-    left: 0;
-}
-
-.heart::after {
-    left: -9px;
-    top: 0;
-}
-
-@keyframes float {
-    from { transform: rotate(45deg) translateY(0px); }
-    to { transform: rotate(45deg) translateY(-10px); }
-}
-
-.linea {
-    position: absolute;
-    bottom: 30px;
-    left: 50px;
-    right: 50px;
-    height: 2px;
-    background: black;
-}
+.heart::before { top: -9px; left: 0; }
+.heart::after { left: -9px; top: 0; }
