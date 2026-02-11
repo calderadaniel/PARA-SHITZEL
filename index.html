@@ -3,47 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Shitzel ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
-
+<title>Para Mi Todo Shitzel</title>
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div id="startScreen">
-    <div id="startHeart"></div>
-    <div class="startText">San Valentín</div>
+  <div id="heartStart">❤</div>
+  <div class="valentin">San Valentín</div>
 </div>
 
-<div id="scene">
+<div id="mainScene">
 
+  <div id="leftText">
+    <div id="dedicatoria"></div>
+    <div id="contador"></div>
+  </div>
+
+  <div id="rightTree">
     <div id="ground"></div>
-
-    <div id="treeContainer">
-        <svg id="treeSVG" viewBox="0 0 300 400">
-            <path id="treePath" d="
-            M150 380 
-            L150 280
-            M150 320 L120 250
-            M150 300 L190 230
-            M120 250 L90 200
-            M120 250 L130 210
-            M190 230 L220 180
-            M190 230 L170 190
-            " />
-        </svg>
-        <div id="heartsContainer"></div>
-    </div>
-
-    <div id="textContainer">
-        <div id="timer"></div>
-        <div id="letter"></div>
-    </div>
+    <svg id="treeSVG" viewBox="0 0 400 500">
+      <path id="treePath" d="M200 480 
+        Q190 400 200 350
+        Q180 300 200 260
+        Q170 220 200 200
+        Q160 170 200 150
+        Q180 120 200 100
+        Q220 120 200 150
+        Q240 170 200 200
+        Q230 220 200 260
+        Q220 300 200 350
+        Q210 400 200 480" />
+    </svg>
+  </div>
 
 </div>
 
-<audio id="music" src="audio.mp3"></audio>
+<audio id="music" src="music.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
