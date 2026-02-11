@@ -3,52 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para el amor de mi vida</title>
+<title>Para Shitzel ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- CORAZÓN INICIAL -->
 <div id="startScreen">
-    <div id="heartButton"></div>
+    <div id="startHeart"></div>
+    <div class="startText">San Valentín</div>
 </div>
 
-<!-- CONTENIDO PRINCIPAL -->
-<div class="container hidden">
+<div id="scene">
 
-    <div class="left">
-        <h1>Para el amor de mi vida:</h1>
+    <div id="ground"></div>
 
-        <p>
-            Si pudiera elegir un lugar seguro,<br>
-            sería a tu lado.
-        </p>
-
-        <p>
-            Cuanto más tiempo estoy contigo,<br>
-            más te amo.
-        </p>
-
-        <p class="firma">— I Love You!</p>
-
-        <div class="contador">
-            Mi amor por ti comenzó hace...
-            <div id="timer"></div>
-        </div>
+    <div id="treeContainer">
+        <svg id="treeSVG" viewBox="0 0 300 400">
+            <path id="treePath" d="
+            M150 380 
+            L150 280
+            M150 320 L120 250
+            M150 300 L190 230
+            M120 250 L90 200
+            M120 250 L130 210
+            M190 230 L220 180
+            M190 230 L170 190
+            " />
+        </svg>
+        <div id="heartsContainer"></div>
     </div>
 
-    <div class="right">
-        <div class="tree">
-            <div class="trunk"></div>
-            <div class="canopy" id="canopy"></div>
-        </div>
+    <div id="textContainer">
+        <div id="timer"></div>
+        <div id="letter"></div>
     </div>
 
 </div>
 
-<audio id="music" src="musica.mp3"></audio>
+<audio id="music" src="audio.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
