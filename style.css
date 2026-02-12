@@ -1,34 +1,32 @@
-body {
-  margin: 0;
-  background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body{
+  margin:0;
+  background: linear-gradient(to bottom,#d8a7d8,#8ea6d8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
   font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
 }
 
-.container {
-  text-align: center;
-  position: relative;
+.container{
+  text-align:center;
+  position:relative;
 }
 
-#treeSVG {
-  width: 300px;
-  margin: auto;
+#scene{
+  width:340px;
 }
 
-.counter {
-  font-size: 28px;
-  color: white;
-  opacity: 0;
-  margin-top: 20px;
+.counter{
+  color:white;
+  font-size:28px;
+  margin-top:15px;
+  opacity:0;
 }
 
-.message {
-  font-size: 20px;
-  color: white;
-  opacity: 0;
-  margin-top: 10px;
+.message{
+  color:white;
+  font-size:18px;
+  opacity:0;
 }
