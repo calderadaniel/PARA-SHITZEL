@@ -171,4 +171,16 @@ tl.to("#drop", {
     from: "random"
   },
   duration: 3,
-  ease:
+  ease: "power1.in"
+});
+
+
+/* =========================
+   📅 CALCULAR DÍAS
+========================= */
+
+function calcularDias() {
+  const inicio = new Date("2021-04-12");
+  const hoy = new Date();
+  return Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
+}
