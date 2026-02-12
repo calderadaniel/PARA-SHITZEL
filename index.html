@@ -1,46 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Mi Todo Shitzel</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Animación Profesional</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
 
-<div id="startScreen">
-  <div id="heartStart">❤</div>
-  <div class="valentin">San Valentín</div>
-</div>
+<div class="container">
 
-<div id="mainScene">
+  <!-- SVG -->
+  <svg id="treeSVG" viewBox="0 0 500 600">
+    <g id="tree">
+      <path id="trunk"
+        d="M250 500 C240 450 260 400 250 350 C240 300 260 250 250 200"
+        stroke="#4a2e1f"
+        stroke-width="8"
+        fill="none"
+        stroke-linecap="round"/>
 
-  <div id="leftText">
-    <div id="dedicatoria"></div>
-    <div id="contador"></div>
-  </div>
+      <circle class="leaf" cx="200" cy="250" r="8" fill="#ff4d6d"/>
+      <circle class="leaf" cx="230" cy="220" r="8" fill="#ff4d6d"/>
+      <circle class="leaf" cx="270" cy="220" r="8" fill="#ff4d6d"/>
+      <circle class="leaf" cx="300" cy="250" r="8" fill="#ff4d6d"/>
+      <circle class="leaf" cx="250" cy="190" r="8" fill="#ff4d6d"/>
+    </g>
+  </svg>
 
-  <div id="rightTree">
-    <div id="ground"></div>
-    <svg id="treeSVG" viewBox="0 0 400 500">
-      <path id="treePath" d="M200 480 
-        Q190 400 200 350
-        Q180 300 200 260
-        Q170 220 200 200
-        Q160 170 200 150
-        Q180 120 200 100
-        Q220 120 200 150
-        Q240 170 200 200
-        Q230 220 200 260
-        Q220 300 200 350
-        Q210 400 200 480" />
-    </svg>
-  </div>
+  <div class="counter" id="counter">0 días</div>
+  <div class="message" id="message">Tu texto personalizado aquí</div>
 
 </div>
-
-<audio id="music" src="music.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
