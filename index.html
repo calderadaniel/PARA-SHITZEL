@@ -1,214 +1,284 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Amor</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para mi todo Shitzel</title>
+
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Arial', sans-serif;
-  background: #fff5f8;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-#scene {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+  body {
+    font-family: 'Georgia', cursive;
+    background: #f7d6df;
+    overflow: hidden;
+    height: 100vh;
+  }
 
-/* Corazón inicial */
-#startHeart {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 120px;
-  color: #ff4f8b;
-  cursor: pointer;
-  transition: transform 1s, border-radius 1s;
-}
+  /* ---------- CORAZÓN INICIAL ---------- */
+  #start {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+  }
 
-#sanValentin {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 28px;
-  color: #ff4f8b;
-}
+  #heart {
+    width: 80px;
+    height: 80px;
+    background: #e63946;
+    position: relative;
+    transform: rotate(-45deg);
+  }
 
-/* Línea negra */
-#line {
-  position: absolute;
-  bottom: 40px;
-  width: 120%;
-  height: 6px;
-  background: black;
-  left: -10%;
-}
+  #heart::before,
+  #heart::after {
+    content: "";
+    width: 80px;
+    height: 80px;
+    background: #e63946;
+    border-radius: 50%;
+    position: absolute;
+  }
 
-/* Árbol */
-#treeContainer {
-  position: absolute;
-  bottom: 46px;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: transform 2s;
-}
+  #heart::before {
+    top: -40px;
+    left: 0;
+  }
 
-svg {
-  overflow: visible;
-}
+  #heart::after {
+    left: 40px;
+    top: 0;
+  }
 
-/* Texto */
-#textContainer {
-  position: absolute;
-  left: 40px;
-  top: 80px;
-  width: 35%;
-  color: #444;
-  font-size: 18px;
-  display: none;
-}
+  #sanValentin {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #222;
+  }
 
-#timer {
-  margin-top: 20px;
-  font-weight: bold;
-}
+  /* ---------- LÍNEA NEGRA ---------- */
+  #line {
+    position: absolute;
+    bottom: 40px;
+    height: 6px;
+    background: black;
+    left: 50%;
+    width: 0;
+    transform: translateX(-50%);
+  }
 
-/* Corazones hojas */
-.leaf {
-  position: absolute;
-  font-size: 18px;
-  animation: float 6s linear infinite;
-}
+  /* ---------- CÍRCULO / GOTA ---------- */
+  #drop {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: #e63946;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: 5;
+  }
 
-@keyframes float {
-  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
-  100% { transform: translate(-120px, 200px) rotate(60deg); opacity: 0; }
-}
+  /* ---------- ÁRBOL ---------- */
+  #tree-container {
+    position: absolute;
+    bottom: 40px;
+    right: 10%;
+    width: 300px;
+    height: 400px;
+    display: none;
+  }
+
+  svg path {
+    fill: none;
+    stroke: #6b3e26;
+    stroke-width: 4;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawTree 3s ease forwards;
+  }
+
+  @keyframes drawTree {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ---------- TEXTO ---------- */
+  #text {
+    position: absolute;
+    left: 8%;
+    top: 15%;
+    width: 40%;
+    font-size: 18px;
+    color: #222;
+    display: none;
+  }
+
+  .typing {
+    white-space: pre-wrap;
+    border-right: 2px solid black;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
+
+  /* ---------- TEMPORIZADOR ---------- */
+  #timer {
+    position: absolute;
+    bottom: 80px;
+    right: 15%;
+    font-size: 16px;
+    color: #222;
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    #text {
+      width: 80%;
+      left: 10%;
+      top: 10%;
+    }
+
+    #tree-container {
+      right: 50%;
+      transform: translateX(50%);
+    }
+  }
 </style>
 </head>
 
 <body>
-<div id="scene">
 
-  <div id="startHeart">❤</div>
+<!-- INICIO -->
+<div id="start">
+  <div id="heart"></div>
   <div id="sanValentin">San Valentín</div>
-
-  <div id="line"></div>
-
-  <div id="treeContainer"></div>
-
-  <div id="textContainer">
-    <div id="dedication"></div>
-    <div id="paragraph"></div>
-    <div id="post"></div>
-    <div id="timer"></div>
-  </div>
-
 </div>
 
+<div id="drop"></div>
+<div id="line"></div>
+
+<!-- ÁRBOL -->
+<div id="tree-container">
+<svg viewBox="0 0 200 400">
+  <path d="M100 400
+           C100 300 80 260 60 220
+           C40 180 60 150 90 130
+           C70 100 90 70 120 90
+           C140 60 170 80 150 120
+           C180 160 150 200 120 230
+           C140 260 120 300 100 350"/>
+</svg>
+</div>
+
+<!-- TEXTO -->
+<div id="text">
+  <div id="dedicatoria" class="typing"></div>
+</div>
+
+<!-- TEMPORIZADOR -->
+<div id="timer">
+  <strong>Mi amor por ti comenzó hace:</strong><br>
+  <span id="time"></span>
+</div>
+
+<audio id="music" src="audio.mp3"></audio>
+
 <script>
-const heart = document.getElementById('startHeart');
-const text = document.getElementById('textContainer');
-const treeContainer = document.getElementById('treeContainer');
+const start = document.getElementById("start");
+const drop = document.getElementById("drop");
+const line = document.getElementById("line");
+const tree = document.getElementById("tree-container");
+const music = document.getElementById("music");
 
-heart.addEventListener('click', () => {
-  document.getElementById('sanValentin').style.display = 'none';
+start.onclick = () => {
+  start.style.display = "none";
+  drop.style.display = "block";
 
-  heart.style.borderRadius = '50%';
-  heart.style.transform = 'translate(-50%, -50%) scale(0.7)';
+  let lineWidth = 0;
+  const maxWidth = window.innerWidth * 1.2;
+
+  const drawLine = setInterval(() => {
+    lineWidth += 20;
+    line.style.width = lineWidth + "px";
+    if (lineWidth >= maxWidth) clearInterval(drawLine);
+  }, 16);
 
   let top = 40;
   const fall = setInterval(() => {
-    top += 5;
-    heart.style.top = top + '%';
+    top += 2;
+    drop.style.top = top + "%";
+
     if (top >= 85) {
       clearInterval(fall);
-      heart.style.display = 'none';
-      drawTree();
+      drop.style.display = "none";
+      tree.style.display = "block";
+      setTimeout(showTimer, 2000);
+      setTimeout(typeText, 2500);
+      music.currentTime = 28;
+      music.volume = 0;
+      music.play();
+      fadeIn();
     }
   }, 30);
-});
+};
 
-function drawTree() {
-  treeContainer.innerHTML = `
-  <svg width="300" height="400">
-    <path d="M150 400 L150 200" stroke="#6b3e26" stroke-width="10" fill="none">
-      <animate attributeName="stroke-dasharray" from="0,400" to="400,0" dur="2s" fill="freeze"/>
-    </path>
-    <path d="M150 260 C90 220, 80 170, 60 120" stroke="#6b3e26" stroke-width="4" fill="none"/>
-    <path d="M150 260 C210 220, 220 170, 240 120" stroke="#6b3e26" stroke-width="4" fill="none"/>
-    <path d="M150 220 C110 190, 100 150, 90 120" stroke="#6b3e26" stroke-width="3" fill="none"/>
-    <path d="M150 220 C190 190, 200 150, 210 120" stroke="#6b3e26" stroke-width="3" fill="none"/>
-  </svg>
-  `;
-
-  setTimeout(createLeaves, 2000);
+function fadeIn() {
+  let v = 0;
+  const fade = setInterval(() => {
+    v += 0.01;
+    music.volume = v;
+    if (v >= 1) clearInterval(fade);
+  }, 100);
 }
 
-function createLeaves() {
-  const colors = ['#ffb3c6','#ff8fab','#ff5d8f','#ff4d6d'];
-
-  for (let i = 0; i < 60; i++) {
-    const leaf = document.createElement('div');
-    leaf.className = 'leaf';
-    leaf.textContent = '❤';
-    leaf.style.color = colors[Math.floor(Math.random()*colors.length)];
-    leaf.style.left = (window.innerWidth/2 + Math.random()*120 - 60) + 'px';
-    leaf.style.top = (window.innerHeight - 300 + Math.random()*180) + 'px';
-    leaf.style.fontSize = (12 + Math.random()*14) + 'px';
-    document.body.appendChild(leaf);
-
-    if (Math.random() < 0.4) {
-      leaf.style.animationDelay = (Math.random()*3)+'s';
-    } else {
-      leaf.style.animation = 'none';
-    }
-  }
-
-  setTimeout(showText, 2500);
+function showTimer() {
+  document.getElementById("timer").style.display = "block";
+  setInterval(updateTimer, 1000);
 }
 
-function showText() {
-  treeContainer.style.transform = 'translateX(120px)';
-  text.style.display = 'block';
+function updateTimer() {
+  const startDate = new Date("2022-02-14");
+  const now = new Date();
+  const diff = now - startDate;
 
-  startTimer('2023-02-14T00:00:00');
-
-  typeText("Para el amor de mi vida 💖", document.getElementById('dedication'), 40, () => {
-    typeText("Este árbol representa todo lo que ha crecido entre nosotros, incluso en los días más difíciles.", document.getElementById('paragraph'), 30, () => {
-      typeText("P.D. I love you ❤️", document.getElementById('post'), 40);
-    });
-  });
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  document.getElementById("time").innerText = days + " días";
 }
 
-function typeText(text, element, speed, callback) {
+function typeText() {
+  document.getElementById("text").style.display = "block";
+  const text = `PARA MI TODO SHITZEL
+
+Para la persona que me hizo recordar con se siente el amor:
+Si me dieran a elegir el lugar para estar el resto de mi vida,
+sería abrazado a tu cuerpo,
+viéndonos a los ojos por toda la eternidad.
+
+I love you 💌`;
+  
   let i = 0;
-  const interval = setInterval(() => {
-    element.textContent += text[i];
+  const el = document.getElementById("dedicatoria");
+  const typing = setInterval(() => {
+    el.innerText += text[i];
     i++;
-    if (i >= text.length) {
-      clearInterval(interval);
-      if (callback) callback();
-    }
-  }, speed);
-}
-
-function startTimer(date) {
-  const start = new Date(date);
-  setInterval(() => {
-    const now = new Date();
-    const diff = now - start;
-    const days = Math.floor(diff / (1000*60*60*24));
-    document.getElementById('timer').textContent =
-      `Mi amor por ti comenzó hace: ${days} días`;
-  }, 1000);
+    if (i >= text.length) clearInterval(typing);
+  }, 50);
 }
 </script>
+
 </body>
 </html>
