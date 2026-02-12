@@ -1,284 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Para mi todo Shitzel</title>
-
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Georgia', cursive;
-    background: #f7d6df;
-    overflow: hidden;
-    height: 100vh;
-  }
-
-  /* ---------- CORAZÓN INICIAL ---------- */
-  #start {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    cursor: pointer;
-    z-index: 10;
-  }
-
-  #heart {
-    width: 80px;
-    height: 80px;
-    background: #e63946;
-    position: relative;
-    transform: rotate(-45deg);
-  }
-
-  #heart::before,
-  #heart::after {
-    content: "";
-    width: 80px;
-    height: 80px;
-    background: #e63946;
-    border-radius: 50%;
-    position: absolute;
-  }
-
-  #heart::before {
-    top: -40px;
-    left: 0;
-  }
-
-  #heart::after {
-    left: 40px;
-    top: 0;
-  }
-
-  #sanValentin {
-    margin-top: 20px;
-    font-size: 20px;
-    color: #222;
-  }
-
-  /* ---------- LÍNEA NEGRA ---------- */
-  #line {
-    position: absolute;
-    bottom: 40px;
-    height: 6px;
-    background: black;
-    left: 50%;
-    width: 0;
-    transform: translateX(-50%);
-  }
-
-  /* ---------- CÍRCULO / GOTA ---------- */
-  #drop {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    width: 40px;
-    height: 40px;
-    background: #e63946;
-    border-radius: 50%;
-    transform: translateX(-50%);
-    display: none;
-    z-index: 5;
-  }
-
-  /* ---------- ÁRBOL ---------- */
-  #tree-container {
-    position: absolute;
-    bottom: 40px;
-    right: 10%;
-    width: 300px;
-    height: 400px;
-    display: none;
-  }
-
-  svg path {
-    fill: none;
-    stroke: #6b3e26;
-    stroke-width: 4;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: drawTree 3s ease forwards;
-  }
-
-  @keyframes drawTree {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  /* ---------- TEXTO ---------- */
-  #text {
-    position: absolute;
-    left: 8%;
-    top: 15%;
-    width: 40%;
-    font-size: 18px;
-    color: #222;
-    display: none;
-  }
-
-  .typing {
-    white-space: pre-wrap;
-    border-right: 2px solid black;
-    animation: blink 0.8s infinite;
-  }
-
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
-
-  /* ---------- TEMPORIZADOR ---------- */
-  #timer {
-    position: absolute;
-    bottom: 80px;
-    right: 15%;
-    font-size: 16px;
-    color: #222;
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    #text {
-      width: 80%;
-      left: 10%;
-      top: 10%;
-    }
-
-    #tree-container {
-      right: 50%;
-      transform: translateX(50%);
-    }
-  }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Todo Shitzel</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<!-- INICIO -->
-<div id="start">
-  <div id="heart"></div>
-  <div id="sanValentin">San Valentín</div>
+<div id="startScreen">
+  <div id="heartStart">❤</div>
+  <div class="valentin">San Valentín</div>
 </div>
 
-<div id="drop"></div>
-<div id="line"></div>
+<div id="mainScene">
 
-<!-- ÁRBOL -->
-<div id="tree-container">
-<svg viewBox="0 0 200 400">
-  <path d="M100 400
-           C100 300 80 260 60 220
-           C40 180 60 150 90 130
-           C70 100 90 70 120 90
-           C140 60 170 80 150 120
-           C180 160 150 200 120 230
-           C140 260 120 300 100 350"/>
-</svg>
+  <div id="leftText">
+    <div id="dedicatoria"></div>
+    <div id="contador"></div>
+  </div>
+
+  <div id="rightTree">
+    <div id="ground"></div>
+    <svg id="treeSVG" viewBox="0 0 400 500">
+      <path id="treePath" d="M200 480 
+        Q190 400 200 350
+        Q180 300 200 260
+        Q170 220 200 200
+        Q160 170 200 150
+        Q180 120 200 100
+        Q220 120 200 150
+        Q240 170 200 200
+        Q230 220 200 260
+        Q220 300 200 350
+        Q210 400 200 480" />
+    </svg>
+  </div>
+
 </div>
 
-<!-- TEXTO -->
-<div id="text">
-  <div id="dedicatoria" class="typing"></div>
-</div>
+<audio id="music" src="music.mp3"></audio>
 
-<!-- TEMPORIZADOR -->
-<div id="timer">
-  <strong>Mi amor por ti comenzó hace:</strong><br>
-  <span id="time"></span>
-</div>
-
-<audio id="music" src="audio.mp3"></audio>
-
-<script>
-const start = document.getElementById("start");
-const drop = document.getElementById("drop");
-const line = document.getElementById("line");
-const tree = document.getElementById("tree-container");
-const music = document.getElementById("music");
-
-start.onclick = () => {
-  start.style.display = "none";
-  drop.style.display = "block";
-
-  let lineWidth = 0;
-  const maxWidth = window.innerWidth * 1.2;
-
-  const drawLine = setInterval(() => {
-    lineWidth += 20;
-    line.style.width = lineWidth + "px";
-    if (lineWidth >= maxWidth) clearInterval(drawLine);
-  }, 16);
-
-  let top = 40;
-  const fall = setInterval(() => {
-    top += 2;
-    drop.style.top = top + "%";
-
-    if (top >= 85) {
-      clearInterval(fall);
-      drop.style.display = "none";
-      tree.style.display = "block";
-      setTimeout(showTimer, 2000);
-      setTimeout(typeText, 2500);
-      music.currentTime = 28;
-      music.volume = 0;
-      music.play();
-      fadeIn();
-    }
-  }, 30);
-};
-
-function fadeIn() {
-  let v = 0;
-  const fade = setInterval(() => {
-    v += 0.01;
-    music.volume = v;
-    if (v >= 1) clearInterval(fade);
-  }, 100);
-}
-
-function showTimer() {
-  document.getElementById("timer").style.display = "block";
-  setInterval(updateTimer, 1000);
-}
-
-function updateTimer() {
-  const startDate = new Date("2022-02-14");
-  const now = new Date();
-  const diff = now - startDate;
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  document.getElementById("time").innerText = days + " días";
-}
-
-function typeText() {
-  document.getElementById("text").style.display = "block";
-  const text = `PARA MI TODO SHITZEL
-
-Para la persona que me hizo recordar con se siente el amor:
-Si me dieran a elegir el lugar para estar el resto de mi vida,
-sería abrazado a tu cuerpo,
-viéndonos a los ojos por toda la eternidad.
-
-I love you 💌`;
-  
-  let i = 0;
-  const el = document.getElementById("dedicatoria");
-  const typing = setInterval(() => {
-    el.innerText += text[i];
-    i++;
-    if (i >= text.length) clearInterval(typing);
-  }, 50);
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
