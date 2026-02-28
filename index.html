@@ -1,54 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Árbol Corazón</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>San Valentín</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
+  
+  <div id="app-container">
+    
+    <div id="intro-layer">
+      <div id="heart-wrapper">
+        <svg id="morph-shape" viewBox="0 0 100 100">
+          <path id="shape-path" fill="#d90429" 
+                d="M 50,30 C 75,10 95,30 80,55 C 65,80 50,90 50,90 C 50,90 35,80 20,55 C 5,30 25,10 50,30" />
+        </svg>
+      </div>
+      <h1 id="intro-title">San Valentín</h1>
+    </div>
 
-<div class="container">
+    <div id="ground-line"></div>
 
-<svg id="scene" viewBox="0 0 500 650">
+    <div id="tree-container">
+      <svg id="tree-svg" viewBox="0 0 200 300" preserveAspectRatio="xMidYMax meet">
+        <g fill="none" stroke="#684e3b" stroke-linecap="round" stroke-linejoin="round">
+          <path class="branch main-trunk" stroke-width="8" d="M 100,300 Q 102,230 100,180" />
+          <path class="branch" stroke-width="5" d="M 100,180 Q 120,150 140,110" />
+          <path class="branch" stroke-width="5" d="M 100,180 Q 80,140 60,110" />
+          
+          <path class="branch" stroke-width="3" d="M 120,150 Q 140,130 160,100" />
+          <path class="branch" stroke-width="2.5" d="M 140,110 Q 150,80 165,60" />
+          <path class="branch" stroke-width="2" d="M 130,135 Q 115,100 120,70" />
 
-  <!-- GOTA -->
-  <circle id="drop" cx="250" cy="80" r="10" fill="#ff4d6d"/>
+          <path class="branch" stroke-width="3" d="M 80,140 Q 60,120 40,100" />
+          <path class="branch" stroke-width="2.5" d="M 60,110 Q 50,80 35,60" />
+          <path class="branch" stroke-width="2" d="M 70,125 Q 85,100 80,70" />
 
-  <!-- LINEA IMPACTO -->
-  <line id="groundLine" x1="250" y1="450" x2="250" y2="450"
-        stroke="#4a2e1f" stroke-width="4" stroke-linecap="round"/>
+          <path class="branch" stroke-width="3" d="M 100,180 Q 98,130 100,90" />
+          <path class="branch" stroke-width="2" d="M 100,130 Q 110,100 105,60" />
+          <path class="branch" stroke-width="2" d="M 100,110 Q 90,80 95,50" />
+        </g>
+      </svg>
+      
+      <div id="leaves-container"></div>
+    </div>
 
-  <!-- ÁRBOL -->
-  <g id="treeGroup">
+    <div id="text-content">
+      <div id="final-text-container">
+        <p id="final-text">Para el amor de mi vida:<br><br>Si pudiera elegir un lugar<br>seguro, sería a tu lado.<br><br>Cuanto más tiempo estoy<br>contigo más te amo.<br><br>- I Love You!</p>
+      </div>
 
-    <path id="trunk"
-      d="M250 450 C240 380 260 330 250 280 C240 240 260 200 250 160"
-      stroke="#4a2e1f"
-      stroke-width="8"
-      fill="none"
-      stroke-linecap="round"/>
+      <div id="counter-container">
+        <p class="counter-label">Mi amor por ti comenzó hace...</p>
+        <div class="time-row">
+          <span id="c-years" class="num">0</span> <span class="unit">años</span>
+          <span id="c-months" class="num">0</span> <span class="unit">meses</span>
+          <span id="c-days" class="num">0</span> <span class="unit">días</span>
+        </div>
+      </div>
+    </div>
 
-    <g id="branches" stroke="#4a2e1f" stroke-width="4" fill="none">
-      <path d="M250 300 C210 260 180 230 160 200"/>
-      <path d="M250 300 C290 260 320 230 340 200"/>
-      <path d="M250 240 C210 210 190 180 175 160"/>
-      <path d="M250 240 C290 210 310 180 325 160"/>
-    </g>
+  </div>
 
-    <g id="leaves"></g>
+  <audio id="music" src="music.mp3"></audio>
 
-  </g>
-
-</svg>
-
-<div class="counter" id="counter"></div>
-<div class="message" id="message">Tu texto personalizado aquí</div>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
