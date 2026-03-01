@@ -1,322 +1,208 @@
 /* ================================================================
-   VALENTINE TREE ANIMATION — style.css
-   Mobile-first · 390×844px principal viewport
+   VALENTINE TREE — style.css  |  Mobile-first 390×844px
 ================================================================ */
-
-/* ── VARIABLES ── */
 :root {
-  --cream:       #f7edea;
-  --cream-deep:  #f0ddd7;
-  --cream-shadow:#e8ccc6;
-  --red-deep:    #c8001c;
-  --red-mid:     #e8102e;
-  --red-light:   #ff607a;
-  --red-blush:   #ffb3c1;
-  --bark-dark:   #2e1205;
-  --bark-mid:    #6b3210;
-  --text:        #3d1a0a;
-  --text-light:  #7a4030;
+  --cream:      #f7edea;
+  --red-deep:   #c8001c;
+  --red-mid:    #e8102e;
+  --red-light:  #ff607a;
+  --bark-dark:  #2e1205;
+  --bark-mid:   #6b3210;
+  --text:       #3d1a0a;
+  --text-light: #7a4030;
 }
 
-/* ── RESET ── */
-*, *::before, *::after {
-  margin: 0; padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-/* ── BASE ── */
 html, body {
-  width: 100%; height: 100%;
-  overflow: hidden;
+  width:100%; height:100%;
+  overflow:hidden;
   background: var(--cream);
   font-family: 'Cormorant Garamond', Georgia, serif;
   -webkit-font-smoothing: antialiased;
-  /* Prevent pull-to-refresh & scroll */
   touch-action: none;
   overscroll-behavior: none;
 }
 
-/* ── TEXTURE OVERLAY (grain sutil) ── */
+/* Grain de textura muy sutil */
 body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
-  opacity: 0.55;
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:999; opacity:.5;
 }
 
 /* ── SUELO ── */
 #ground-line {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--bark-dark) 20%,
-    var(--bark-mid)  50%,
-    var(--bark-dark) 80%,
-    transparent 100%
-  );
-  opacity: 0;
-  z-index: 2;
-  /* Se mostrará vía GSAP */
+  position:fixed; bottom:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, transparent 0%, var(--bark-dark) 20%,
+              var(--bark-mid) 50%, var(--bark-dark) 80%, transparent 100%);
+  opacity:0; z-index:2;
+  transform: scaleX(0);
   transform-origin: center;
 }
 
-/* ── INTRO: CORAZÓN ── */
+/* ── INTRO ── */
 #intro-layer {
-  position: fixed; inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1.2rem, 4vh, 2rem);
-  z-index: 50;
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap: clamp(1.2rem,4vh,2rem);
+  z-index:50;
 }
 
-#heart-svg {
-  width: clamp(110px, 32vw, 155px);
-  height: auto;
-  cursor: pointer;
-  transform-origin: center center;
-  user-select: none;
+/* Wrapper que contiene corazón Y círculo superpuestos */
+#morph-wrap {
+  position:relative;
+  width: clamp(110px,32vw,150px);
+  height: clamp(110px,32vw,150px);
+  cursor:pointer;
   -webkit-tap-highlight-color: transparent;
-  /* Latido base */
-  animation: heartbeat 1.6s ease-in-out infinite;
+  user-select:none;
 }
+
+#heart-svg, #circle-svg {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  transform-origin: center center;
+}
+
+/* Latido CSS (se cancela en JS al hacer click) */
+#heart-svg { animation: heartbeat 1.65s ease-in-out infinite; }
 
 @keyframes heartbeat {
-  0%,100% { transform: scale(1.00); }
-  14%      { transform: scale(1.12); }
-  28%      { transform: scale(1.04); }
-  42%      { transform: scale(1.14); }
-  70%      { transform: scale(1.00); }
+  0%,100% { transform:scale(1.00); }
+  14%     { transform:scale(1.13); }
+  28%     { transform:scale(1.05); }
+  42%     { transform:scale(1.15); }
+  70%     { transform:scale(1.00); }
 }
+
+/* Círculo oculto al inicio */
+#circle-svg { opacity:0; }
 
 #tap-hint {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: clamp(0.88rem, 3.2vw, 1.05rem);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size: clamp(.88rem,3.2vw,1.05rem);
   color: var(--red-mid);
-  letter-spacing: 0.12em;
-  opacity: 0;
-  animation: fadeHint 0.9s ease-out 2s forwards;
+  letter-spacing:.12em;
+  opacity:0;
+  animation: fadeHint .9s ease-out 2s forwards;
 }
-
-@keyframes fadeHint {
-  to { opacity: 1; }
-}
+@keyframes fadeHint { to { opacity:1; } }
 
 /* ── ÁRBOL ── */
 #tree-layer {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 10;
-  opacity: 0;
-  /* transform-origin bottom-center para que el desplazamiento sea natural */
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  position:fixed; inset:0;
+  pointer-events:none; z-index:10; opacity:0;
+  display:flex; align-items:flex-end; justify-content:center;
 }
 
 #tree-svg {
-  width: clamp(280px, 90vw, 420px);
-  height: auto;
-  /* El SVG tiene viewBox 0 0 400 700, el árbol nace en y=700 */
-  max-height: 100vh;
-  overflow: visible;
-}
-
-/* Todos los paths del árbol ocultos inicialmente (dashoffset via JS) */
-.root, .trunk-shadow, .trunk, .branch, .knot {
-  opacity: 1; /* La visibilidad la maneja stroke-dashoffset */
+  width: clamp(280px,90vw,420px);
+  height:auto; max-height:100vh;
+  overflow:visible;
 }
 
 /* ── HOJAS ── */
 #leaves-layer {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 20;
-  overflow: visible;
+  position:fixed; inset:0;
+  pointer-events:none; z-index:20; overflow:visible;
 }
 
-/* Cada hoja es un <svg> absoluto generado en JS */
 .leaf {
-  position: absolute;
-  transform-origin: center center;
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity;
+  position:absolute;
+  transform-origin:center center;
+  opacity:0; pointer-events:none;
+  will-change:transform,opacity;
 }
 
-/* ── TEXTO FINAL ── */
+/* ── TEXTO ── */
 #text-layer {
-  position: fixed; inset: 0;
-  /* El contenido ocupa el tercio izquierdo en mobile */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(1.2rem, 5vw, 2rem)
-           clamp(0.8rem, 4vw, 1.5rem)
-           clamp(1.2rem, 5vw, 2rem)
-           clamp(1rem,   5vw, 1.8rem);
-  z-index: 30;
-  pointer-events: none;
-  opacity: 0;
-  max-width: 52%;   /* texto ocupa la mitad izquierda */
+  position:fixed; inset:0;
+  display:flex; flex-direction:column; justify-content:center;
+  padding: clamp(1.2rem,5vw,2rem) clamp(.8rem,4vw,1.5rem)
+           clamp(1.2rem,5vw,2rem) clamp(1rem,5vw,1.8rem);
+  z-index:30; pointer-events:none; opacity:0;
+  max-width:52%;
 }
 
-/* Ornamento */
 #text-ornament {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.9rem;
-  opacity: 0;
-  transform: translateY(6px);
+  display:flex; align-items:center; gap:.5rem;
+  margin-bottom:.9rem; opacity:0; transform:translateY(6px);
 }
-
 .orn-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(
-    90deg, transparent, var(--red-mid) 60%, transparent
-  );
+  flex:1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--red-mid) 60%,transparent);
 }
+.orn-heart { font-size:clamp(.75rem,2.5vw,.9rem); color:var(--red-mid); }
 
-.orn-heart {
-  font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-  color: var(--red-mid);
-}
-
-/* Texto principal (typewriter) */
+/* Typewriter */
 #love-text {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(0.7rem, 2.5vw, 0.92rem);
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.8;
-  color: var(--text);
-  letter-spacing: 0.015em;
-  min-height: 7em;
-  /* Cursor typewriter */
-  border-right: none;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.7rem,2.5vw,.92rem);
+  font-style:italic; font-weight:400;
+  line-height:1.85; color:var(--text);
+  letter-spacing:.015em; min-height:7em;
 }
-
 #love-text.typing::after {
-  content: '|';
-  animation: blink 0.7s step-end infinite;
-  color: var(--red-mid);
-  font-style: normal;
-  margin-left: 1px;
+  content:'|';
+  animation:blink .7s step-end infinite;
+  color:var(--red-mid); font-style:normal; margin-left:1px;
 }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
-
-/* Firma */
 #love-sig {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(0.9rem, 3vw, 1.1rem);
-  font-weight: 700;
-  color: var(--red-deep);
-  letter-spacing: 0.06em;
-  margin-top: 0.8rem;
-  opacity: 0;
-  transform: translateY(8px);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.9rem,3vw,1.1rem); font-weight:700;
+  color:var(--red-deep); letter-spacing:.06em;
+  margin-top:.8rem; opacity:0; transform:translateY(8px);
 }
 
-/* Divisor */
 #counter-divider {
-  width: 40%;
-  height: 1px;
-  background: var(--cream-shadow);
-  margin: 0.9rem 0;
-  opacity: 0;
+  width:40%; height:1px;
+  background:#e8ccc6;
+  margin:.9rem 0; opacity:0;
 }
 
-/* Contador */
 #counter-wrap {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.3rem, 1.5vw, 0.7rem);
-  opacity: 0;
-  transform: translateY(10px);
+  display:flex; align-items:center;
+  gap:clamp(.3rem,1.5vw,.7rem);
+  opacity:0; transform:translateY(10px);
 }
-
 .cu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(200, 0, 28, 0.06);
-  border: 1px solid rgba(200, 0, 28, 0.18);
-  border-radius: 10px;
-  padding: clamp(0.3rem, 1.2vw, 0.55rem) clamp(0.5rem, 2vw, 0.9rem);
-  min-width: clamp(2.8rem, 9vw, 4rem);
+  display:flex; flex-direction:column; align-items:center;
+  background:rgba(200,0,28,.06);
+  border:1px solid rgba(200,0,28,.18);
+  border-radius:10px;
+  padding:clamp(.3rem,1.2vw,.55rem) clamp(.5rem,2vw,.9rem);
+  min-width:clamp(2.8rem,9vw,4rem);
 }
-
 .cn {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--red-deep);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.3rem,4.5vw,1.8rem); font-weight:700;
+  line-height:1; color:var(--red-deep);
 }
-
 .cl {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(0.52rem, 1.6vw, 0.65rem);
-  font-style: italic;
-  color: var(--text-light);
-  margin-top: 0.15rem;
-  letter-spacing: 0.1em;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.52rem,1.6vw,.65rem); font-style:italic;
+  color:var(--text-light); margin-top:.15rem; letter-spacing:.1em;
 }
-
 .csep {
-  font-size: clamp(1rem, 3vw, 1.4rem);
-  color: var(--cream-shadow);
-  line-height: 1;
+  font-size:clamp(1rem,3vw,1.4rem);
+  color:#e8ccc6; line-height:1;
 }
-
-/* Subtítulo contador */
 #counter-caption {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: clamp(0.6rem, 1.9vw, 0.74rem);
-  color: var(--text-light);
-  letter-spacing: 0.08em;
-  margin-top: 0.4rem;
-  opacity: 0;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:clamp(.6rem,1.9vw,.74rem);
+  color:var(--text-light); letter-spacing:.08em;
+  margin-top:.4rem; opacity:0;
 }
 
-/* ── HOJAS CAYENDO (clase adicional añadida en JS) ── */
-.leaf-falling {
-  will-change: transform, opacity;
-}
-
-/* ── RESPONSIVE: pantallas más anchas ── */
-@media (min-width: 500px) {
-  #text-layer {
-    max-width: 45%;
-  }
-}
-
-@media (min-width: 768px) {
-  #text-layer {
-    max-width: 40%;
-  }
-  #heart-svg {
-    width: 160px;
-  }
-}
-
-/* ── Accesibilidad ── */
-@media (prefers-reduced-motion: reduce) {
-  #heart-svg { animation: none; }
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+@media (min-width:500px)  { #text-layer { max-width:45%; } }
+@media (min-width:768px)  { #text-layer { max-width:40%; } }
+@media (prefers-reduced-motion:reduce) {
+  #heart-svg { animation:none; }
+  * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
 }
