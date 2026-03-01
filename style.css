@@ -1,177 +1,322 @@
-/* ==========================================================================
-   MOBILE-FIRST ABSOLUTO - 9:16
-   ========================================================================== */
-* {
-  margin: 0;
-  padding: 0;
+/* ================================================================
+   VALENTINE TREE ANIMATION — style.css
+   Mobile-first · 390×844px principal viewport
+================================================================ */
+
+/* ── VARIABLES ── */
+:root {
+  --cream:       #f7edea;
+  --cream-deep:  #f0ddd7;
+  --cream-shadow:#e8ccc6;
+  --red-deep:    #c8001c;
+  --red-mid:     #e8102e;
+  --red-light:   #ff607a;
+  --red-blush:   #ffb3c1;
+  --bark-dark:   #2e1205;
+  --bark-mid:    #6b3210;
+  --text:        #3d1a0a;
+  --text-light:  #7a4030;
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
 }
 
-body, html {
-  width: 100%;
-  height: 100%;
-  background-color: #f7edea; /* Color crema/pastel exacto del video */
-  font-family: 'Poppins', sans-serif;
+/* ── BASE ── */
+html, body {
+  width: 100%; height: 100%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  /* Prevent pull-to-refresh & scroll */
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
-#app-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  max-width: 390px;
-  max-height: 844px;
-  overflow: hidden;
+/* ── TEXTURE OVERLAY (grain sutil) ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.55;
 }
 
-/* ==========================================================================
-   Fase 1 y 2: Intro y Corazón
-   ========================================================================== */
-#intro-layer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  width: 100%;
-  gap: 10px;
-}
-
-#heart-wrapper {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
-
-#morph-shape {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-#intro-title {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #d90429;
-  border-bottom: 2px solid #d90429;
-  padding-bottom: 2px;
-}
-
-/* ==========================================================================
-   Fase 3 y 4: Suelo
-   ========================================================================== */
+/* ── SUELO ── */
 #ground-line {
-  position: absolute;
-  bottom: 20%;
-  left: 10%;
-  width: 80%;
-  height: 3px;
-  background-color: #333; /* Línea oscura como en el video */
-  transform: scaleX(0);
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--bark-dark) 20%,
+    var(--bark-mid)  50%,
+    var(--bark-dark) 80%,
+    transparent 100%
+  );
+  opacity: 0;
+  z-index: 2;
+  /* Se mostrará vía GSAP */
   transform-origin: center;
-  border-radius: 2px;
 }
 
-/* ==========================================================================
-   Fase 5 y 6: Árbol y Hojas
-   ========================================================================== */
-#tree-container {
-  position: absolute;
-  bottom: 20%; /* Alineado con el suelo */
-  left: 50%;
-  width: 250px;
-  height: 350px;
-  transform: translateX(-50%);
+/* ── INTRO: CORAZÓN ── */
+#intro-layer {
+  position: fixed; inset: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: clamp(1.2rem, 4vh, 2rem);
+  z-index: 50;
+}
+
+#heart-svg {
+  width: clamp(110px, 32vw, 155px);
+  height: auto;
+  cursor: pointer;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Latido base */
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1.00); }
+  14%      { transform: scale(1.12); }
+  28%      { transform: scale(1.04); }
+  42%      { transform: scale(1.14); }
+  70%      { transform: scale(1.00); }
+}
+
+#tap-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.88rem, 3.2vw, 1.05rem);
+  color: var(--red-mid);
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: fadeHint 0.9s ease-out 2s forwards;
+}
+
+@keyframes fadeHint {
+  to { opacity: 1; }
+}
+
+/* ── ÁRBOL ── */
+#tree-layer {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  /* transform-origin bottom-center para que el desplazamiento sea natural */
+  display: flex;
   align-items: flex-end;
-  z-index: 5;
+  justify-content: center;
 }
 
 #tree-svg {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-  pointer-events: none;
+  width: clamp(280px, 90vw, 420px);
+  height: auto;
+  /* El SVG tiene viewBox 0 0 400 700, el árbol nace en y=700 */
+  max-height: 100vh;
+  overflow: visible;
 }
 
-#leaves-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* Todos los paths del árbol ocultos inicialmente (dashoffset via JS) */
+.root, .trunk-shadow, .trunk, .branch, .knot {
+  opacity: 1; /* La visibilidad la maneja stroke-dashoffset */
 }
 
+/* ── HOJAS ── */
+#leaves-layer {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible;
+}
+
+/* Cada hoja es un <svg> absoluto generado en JS */
 .leaf {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: #d90429;
-  border-radius: 50% 50% 0 50%; /* Forma de pequeño corazón invertido/hoja */
-  transform: scale(0) rotate(-45deg);
+  transform-origin: center center;
   opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
-/* ==========================================================================
-   Textos y Contador (Desplazado a la izquierda)
-   ========================================================================== */
-#text-content {
-  position: absolute;
-  top: 15%;
-  left: 5%;
-  width: 55%; /* Ocupa el lado izquierdo tras el desplazamiento del árbol */
-  z-index: 8;
-  opacity: 0; /* Controlado por GSAP */
+/* ── TEXTO FINAL ── */
+#text-layer {
+  position: fixed; inset: 0;
+  /* El contenido ocupa el tercio izquierdo en mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.2rem, 5vw, 2rem)
+           clamp(0.8rem, 4vw, 1.5rem)
+           clamp(1.2rem, 5vw, 2rem)
+           clamp(1rem,   5vw, 1.8rem);
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  max-width: 52%;   /* texto ocupa la mitad izquierda */
 }
 
-#final-text-container {
-  margin-bottom: 2rem;
+/* Ornamento */
+#text-ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+  opacity: 0;
+  transform: translateY(6px);
 }
 
-#final-text {
-  font-size: 0.9rem;
+.orn-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg, transparent, var(--red-mid) 60%, transparent
+  );
+}
+
+.orn-heart {
+  font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+  color: var(--red-mid);
+}
+
+/* Texto principal (typewriter) */
+#love-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.7rem, 2.5vw, 0.92rem);
+  font-style: italic;
   font-weight: 400;
-  color: #333;
-  line-height: 1.4;
+  line-height: 1.8;
+  color: var(--text);
+  letter-spacing: 0.015em;
+  min-height: 7em;
+  /* Cursor typewriter */
+  border-right: none;
 }
 
-.char {
+#love-text.typing::after {
+  content: '|';
+  animation: blink 0.7s step-end infinite;
+  color: var(--red-mid);
+  font-style: normal;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Firma */
+#love-sig {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  font-weight: 700;
+  color: var(--red-deep);
+  letter-spacing: 0.06em;
+  margin-top: 0.8rem;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* Divisor */
+#counter-divider {
+  width: 40%;
+  height: 1px;
+  background: var(--cream-shadow);
+  margin: 0.9rem 0;
   opacity: 0;
 }
 
-#counter-container {
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding-top: 10px;
+/* Contador */
+#counter-wrap {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.3rem, 1.5vw, 0.7rem);
+  opacity: 0;
+  transform: translateY(10px);
 }
 
-.counter-label {
-  font-size: 0.8rem;
-  color: #555;
-  margin-bottom: 5px;
+.cu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(200, 0, 28, 0.06);
+  border: 1px solid rgba(200, 0, 28, 0.18);
+  border-radius: 10px;
+  padding: clamp(0.3rem, 1.2vw, 0.55rem) clamp(0.5rem, 2vw, 0.9rem);
+  min-width: clamp(2.8rem, 9vw, 4rem);
 }
 
-.time-row {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #333;
+.cn {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--red-deep);
 }
 
-.num {
-  font-weight: 600;
-  color: #d90429;
+.cl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.52rem, 1.6vw, 0.65rem);
+  font-style: italic;
+  color: var(--text-light);
+  margin-top: 0.15rem;
+  letter-spacing: 0.1em;
 }
-.unit {
-  font-size: 0.75rem;
-  font-weight: 300;
-  margin-right: 5px;
+
+.csep {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--cream-shadow);
+  line-height: 1;
+}
+
+/* Subtítulo contador */
+#counter-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.6rem, 1.9vw, 0.74rem);
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  margin-top: 0.4rem;
+  opacity: 0;
+}
+
+/* ── HOJAS CAYENDO (clase adicional añadida en JS) ── */
+.leaf-falling {
+  will-change: transform, opacity;
+}
+
+/* ── RESPONSIVE: pantallas más anchas ── */
+@media (min-width: 500px) {
+  #text-layer {
+    max-width: 45%;
+  }
+}
+
+@media (min-width: 768px) {
+  #text-layer {
+    max-width: 40%;
+  }
+  #heart-svg {
+    width: 160px;
+  }
+}
+
+/* ── Accesibilidad ── */
+@media (prefers-reduced-motion: reduce) {
+  #heart-svg { animation: none; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
