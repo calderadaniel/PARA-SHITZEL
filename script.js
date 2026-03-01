@@ -476,3 +476,16 @@ function handleStart(e) {
 
 morphWrap.addEventListener('click',    handleStart);
 morphWrap.addEventListener('touchend', handleStart, { passive: false });
+// ESCUCHADOR DE CLIC PARA INICIAR
+morphWrap.addEventListener('click', () => {
+  if (!started) {
+    // 1. Iniciar la línea de tiempo maestra
+    runMasterTimeline();
+    
+    // 2. Opcional: Si quieres añadir música, actívala aquí
+    // const audio = new Audio('tu-musica.mp3');
+    // audio.play();
+
+    console.log("¡Animación iniciada!");
+  }
+});
