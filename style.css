@@ -5,7 +5,6 @@
   --cream:      #f7edea;
   --red-deep:   #c8001c;
   --red-mid:    #e8102e;
-  --red-light:  #ff607a;
   --bark-dark:  #2e1205;
   --bark-mid:   #6b3210;
   --text:       #3d1a0a;
@@ -24,7 +23,7 @@ html, body {
   overscroll-behavior: none;
 }
 
-/* Grain de textura muy sutil */
+/* Grain de textura sutil */
 body::before {
   content:'';
   position:fixed; inset:0;
@@ -32,17 +31,18 @@ body::before {
   pointer-events:none; z-index:999; opacity:.5;
 }
 
-/* ── SUELO ── */
+/* SUELO */
 #ground-line {
   position:fixed; bottom:0; left:0; right:0; height:2px;
-  background: linear-gradient(90deg, transparent 0%, var(--bark-dark) 20%,
-              var(--bark-mid) 50%, var(--bark-dark) 80%, transparent 100%);
+  background: linear-gradient(90deg,
+    transparent 0%, var(--bark-dark) 20%,
+    var(--bark-mid) 50%, var(--bark-dark) 80%, transparent 100%);
   opacity:0; z-index:2;
   transform: scaleX(0);
   transform-origin: center;
 }
 
-/* ── INTRO ── */
+/* INTRO */
 #intro-layer {
   position:fixed; inset:0;
   display:flex; flex-direction:column;
@@ -51,7 +51,6 @@ body::before {
   z-index:50;
 }
 
-/* Wrapper que contiene corazón Y círculo superpuestos */
 #morph-wrap {
   position:relative;
   width: clamp(110px,32vw,150px);
@@ -67,7 +66,7 @@ body::before {
   transform-origin: center center;
 }
 
-/* Latido CSS (se cancela en JS al hacer click) */
+/* Latido CSS — se cancela en JS al hacer click */
 #heart-svg { animation: heartbeat 1.65s ease-in-out infinite; }
 
 @keyframes heartbeat {
@@ -92,7 +91,7 @@ body::before {
 }
 @keyframes fadeHint { to { opacity:1; } }
 
-/* ── ÁRBOL ── */
+/* ÁRBOL */
 #tree-layer {
   position:fixed; inset:0;
   pointer-events:none; z-index:10; opacity:0;
@@ -105,7 +104,7 @@ body::before {
   overflow:visible;
 }
 
-/* ── HOJAS ── */
+/* HOJAS */
 #leaves-layer {
   position:fixed; inset:0;
   pointer-events:none; z-index:20; overflow:visible;
@@ -118,7 +117,7 @@ body::before {
   will-change:transform,opacity;
 }
 
-/* ── TEXTO ── */
+/* TEXTO */
 #text-layer {
   position:fixed; inset:0;
   display:flex; flex-direction:column; justify-content:center;
@@ -202,6 +201,7 @@ body::before {
 
 @media (min-width:500px)  { #text-layer { max-width:45%; } }
 @media (min-width:768px)  { #text-layer { max-width:40%; } }
+
 @media (prefers-reduced-motion:reduce) {
   #heart-svg { animation:none; }
   * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
