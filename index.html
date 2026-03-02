@@ -5,18 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Árbol del Amor ❤</title>
   <link rel="stylesheet" href="style.css" />
-
   <!-- GSAP 3 CORE + CustomEase — ambos 100% gratuitos en cdnjs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
 </head>
 <body>
-
   <div id="ground-line"></div>
-
   <!-- ══ INTRO: corazón + círculo (crossfade = "morph") ══ -->
   <div id="intro-layer">
     <div id="morph-wrap">
@@ -42,7 +37,6 @@
         <path d="M50,78 C50,78 8,52 8,28 C8,13 20,4 33,4 C40,4 47,8 50,15 C53,8 60,4 67,4 C80,4 92,13 92,28 C92,52 50,78 50,78Z"
           fill="url(#hShine)" pointer-events="none"/>
       </svg>
-
       <!-- Círculo: destino del "morph" (crossfade) -->
       <svg id="circle-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="44" fill="url(#hGrad)" filter="url(#hGlow)"/>
@@ -50,7 +44,6 @@
     </div>
     <p id="tap-hint">toca para comenzar</p>
   </div>
-
   <!-- ══ ÁRBOL ══ -->
   <div id="tree-layer">
     <svg id="tree-svg" viewBox="0 0 400 700"
@@ -69,7 +62,6 @@
           <stop offset="100%" stop-color="#3e1a06"/>
         </linearGradient>
       </defs>
-
       <!-- RAÍCES -->
       <path class="root" id="root-l1" stroke="#2e1205" stroke-width="10" fill="none" stroke-linecap="round"
         d="M194,699 C178,696 155,693 130,696 C105,699 80,697 55,700"/>
@@ -81,35 +73,28 @@
         d="M210,699 C232,695 260,692 288,695 C314,698 340,696 366,700"/>
       <path class="root" id="root-c" stroke="#2e1205" stroke-width="7" fill="none" stroke-linecap="round"
         d="M200,699 C200,695 198,690 200,684 C202,678 204,672 200,666"/>
-
       <!-- TRONCO SOMBRA -->
       <path class="trunk-shadow" id="trunk-shad" stroke="#1a0802" stroke-width="34" fill="none"
         stroke-linecap="round" stroke-linejoin="round" opacity="0.22"
         d="M196,698 C193,672 188,645 190,616 C192,587 200,563 197,536
            C194,509 186,487 189,460 C192,433 200,414 198,386
            C196,358 188,338 191,310 C194,282 202,264 199,238 C196,212 190,195 194,170"/>
-
       <!-- TRONCO BASE (grosor 44) -->
       <path class="trunk" id="trunk-base" stroke="url(#barkG)" stroke-width="44" fill="none"
         stroke-linecap="round" stroke-linejoin="round"
         d="M200,698 C197,672 192,645 194,616 C196,587 204,563 201,536 C198,509 190,487 193,460"/>
-
       <ellipse class="knot" cx="197" cy="548" rx="12" ry="7"
         fill="#2a1005" opacity="0.5" transform="rotate(-10,197,548)"/>
-
       <!-- TRONCO MEDIO (grosor 28) -->
       <path class="trunk" id="trunk-mid" stroke="url(#barkG)" stroke-width="28" fill="none"
         stroke-linecap="round" stroke-linejoin="round"
         d="M193,460 C196,433 204,414 202,386 C200,358 192,338 195,310"/>
-
       <ellipse class="knot" cx="198" cy="395" rx="9" ry="5.5"
         fill="#2a1005" opacity="0.45" transform="rotate(8,198,395)"/>
-
       <!-- TRONCO SUPERIOR (grosor 15) -->
       <path class="trunk" id="trunk-top" stroke="url(#barkG)" stroke-width="15" fill="none"
         stroke-linecap="round" stroke-linejoin="round"
         d="M195,310 C198,282 206,264 203,238 C200,212 194,195 198,170"/>
-
       <!-- RAMAS PRIMARIAS IZQ -->
       <path class="branch" id="b-l1" stroke="url(#barkG)" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"
         d="M194,455 C172,438 144,424 112,410 C84,398 58,390 30,382"/>
@@ -117,7 +102,6 @@
         d="M193,392 C168,372 138,356 104,340 C74,326 46,316 18,304"/>
       <path class="branch" id="b-l3" stroke="url(#barkG2)" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"
         d="M195,322 C168,300 136,282 100,262 C68,244 38,230 6,214"/>
-
       <!-- RAMAS PRIMARIAS DER -->
       <path class="branch" id="b-r1" stroke="url(#barkG)" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"
         d="M204,445 C228,428 256,414 286,400 C312,388 340,380 368,372"/>
@@ -125,7 +109,6 @@
         d="M205,382 C232,362 262,344 294,328 C322,314 352,304 382,292"/>
       <path class="branch" id="b-r3" stroke="url(#barkG2)" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"
         d="M204,312 C232,290 264,268 298,248 C328,230 360,216 392,200"/>
-
       <!-- RAMAS SECUNDARIAS IZQ -->
       <path class="branch" id="bs-l1a" stroke="#5a2a0c" stroke-width="8" fill="none" stroke-linecap="round"
         d="M112,410 C90,392 66,372 44,350 C26,332 10,312 -4,290"/>
@@ -137,7 +120,6 @@
         d="M60,322 C38,294 16,264 -4,232 C-20,206 -32,176 -42,148"/>
       <path class="branch" id="bs-l3a" stroke="#6b3210" stroke-width="5" fill="none" stroke-linecap="round"
         d="M100,262 C74,236 48,206 24,174 C4,148 -14,118 -28,88"/>
-
       <!-- RAMAS SECUNDARIAS DER -->
       <path class="branch" id="bs-r1a" stroke="#5a2a0c" stroke-width="8" fill="none" stroke-linecap="round"
         d="M286,400 C308,380 330,356 350,330 C366,308 380,284 392,258"/>
@@ -149,7 +131,6 @@
         d="M344,308 C362,276 378,240 390,204 C400,172 406,138 408,104"/>
       <path class="branch" id="bs-r3a" stroke="#6b3210" stroke-width="5" fill="none" stroke-linecap="round"
         d="M298,248 C320,218 340,184 356,148 C368,118 376,84 378,50"/>
-
       <!-- CORONA -->
       <path class="branch" id="bc-l" stroke="#7a3c14" stroke-width="9" fill="none" stroke-linecap="round"
         d="M198,245 C182,224 162,202 138,178 C116,156 92,134 64,112"/>
@@ -157,7 +138,6 @@
         d="M204,232 C220,210 240,186 264,162 C286,140 312,118 340,96"/>
       <path class="branch" id="bc-c" stroke="#7a3c14" stroke-width="7" fill="none" stroke-linecap="round"
         d="M201,218 C198,196 196,172 198,146 C200,120 205,96 202,72"/>
-
       <!-- RAMITAS TERMINALES -->
       <path class="branch" id="tw-1" stroke="#8c4a1e" stroke-width="3" fill="none" stroke-linecap="round"
         d="M138,178 C118,156 96,132 72,108 C52,88 30,68 6,50"/>
@@ -171,10 +151,8 @@
         d="M202,72 C198,46 196,18 200,-8 C204,-32 210,-56 206,-82"/>
     </svg>
   </div>
-
   <!-- ══ HOJAS ══ -->
   <div id="leaves-layer" aria-hidden="true"></div>
-
   <!-- ══ TEXTO ══ -->
   <div id="text-layer">
     <div id="text-ornament">
@@ -194,7 +172,6 @@
     </div>
     <p id="counter-caption">juntos desde el 12 · 04 · 2021</p>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
