@@ -400,84 +400,31 @@ function runMasterTimeline() {
       duration: 0.55, ease: 'power2.out',
     }, 1.05)
 
-    /* Caída libre al suelo
-       Cálculo dinámico: cae hasta el suelo real de la pantalla */
+    /* CAÍDA LIBRE — la gota cae al suelo sin rebotar */
     .to(morphWrap, {
-      y:       function() {
-        /* Distancia desde centro de pantalla hasta el suelo
-           menos la mitad del wrap */
-        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 6;
+      y:        function() {
+        /* Cae exactamente hasta la línea del suelo (bottom de pantalla) */
+        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 4;
       },
-      scaleY:  1.0,
-      scaleX:  1.0,
-      duration: 0.52,
-      ease:    'power2.in',
+      scaleY:   1.0,
+      scaleX:   1.0,
+      duration: 0.55,
+      ease:     'power2.in',
     }, 1.14)
 
-    /* SQUASH al impacto */
+    /* SPLAT al impacto: la gota se aplasta completamente en el suelo
+       como una gota de agua — se expande horizontal y desaparece */
     .to(morphWrap, {
-      scaleY:          0.36,
-      scaleX:          1.62,
+      scaleY:          0.0,
+      scaleX:          2.2,
       transformOrigin: '50% 100%',
-      duration:        0.10,
+      opacity:         0,
+      duration:        0.22,
       ease:           'power4.out',
-    }, 1.66)
+    }, 1.69)
 
-    /* STRETCH — rebote 1 */
-    .to(morphWrap, {
-      scaleY:  1.42,
-      scaleX:  0.74,
-      y:       function() {
-        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 6 - 75;
-      },
-      duration: 0.20,
-      ease:    'power2.out',
-    }, 1.76)
-
-    /* Squash 2 (menor) */
-    .to(morphWrap, {
-      scaleY:          0.60,
-      scaleX:          1.26,
-      y:               function() {
-        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 6;
-      },
-      transformOrigin: '50% 100%',
-      duration:        0.13,
-      ease:           'power2.in',
-    }, 1.96)
-
-    /* Rebote 2 */
-    .to(morphWrap, {
-      scaleY:  1.12,
-      scaleX:  0.94,
-      y:       function() {
-        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 6 - 38;
-      },
-      duration: 0.13,
-      ease:    'power2.out',
-    }, 2.09)
-
-    /* Settling elástico */
-    .to(morphWrap, {
-      scaleY: 1.0, scaleX: 1.0,
-      y:      function() {
-        return window.innerHeight / 2 - morphWrap.offsetHeight / 2 - 6;
-      },
-      duration: 0.22,
-      ease:    'elastic.out(1, 0.5)',
-    }, 2.22)
-
-    /* Pausa en el suelo */
-    .to({}, { duration: 0.22 }, 2.46)
-
-    /* Hundimiento y desaparición */
-    .to(morphWrap, {
-      scaleY: 0, scaleX: 1.55, opacity: 0,
-      duration: 0.36, ease: 'power3.in',
-    }, 2.68)
-
-    /* Ocultar intro */
-    .set(introLayer, { visibility:'hidden' }, 3.1)
+    /* Ocultar intro inmediatamente después del splat */
+    .set(introLayer, { visibility:'hidden' }, 1.92)
 
   /* ══════════════════════════════════
      FASE 3 · ÁRBOL CRECE
@@ -485,49 +432,47 @@ function runMasterTimeline() {
      en el page load. Solo los animamos aquí.
   ══════════════════════════════════ */
 
-    /* Mostrar capa del árbol */
-    .to(treeLayer, { opacity:1, duration:0.01 }, 3.05)
+    /* Mostrar capa del árbol — justo después del splat */
+    .to(treeLayer, { opacity:1, duration:0.01 }, 1.95)
 
-    /* TRONCO: de abajo hacia arriba */
+    /* TRONCO: brota desde el suelo (punto de impacto) */
     .to('#trunk1', {
       strokeDashoffset:0, duration:0.90, ease:'power2.inOut',
-    }, 3.1)
+    }, 1.95)
     .to('#trunk2', {
       strokeDashoffset:0, duration:0.65, ease:'power2.inOut',
-    }, 3.92)
+    }, 2.77)
 
-    /* RAMAS IZQUIERDA: de más baja a más alta */
+    /* RAMAS: se extienden desde el tronco */
     .to(['#bl1','#br1'], {
       strokeDashoffset:0, duration:0.58, ease:'power2.out', stagger:0.06,
-    }, 4.38)
+    }, 3.23)
     .to(['#bl2','#br2'], {
       strokeDashoffset:0, duration:0.52, ease:'power2.out', stagger:0.06,
-    }, 4.68)
+    }, 3.53)
     .to(['#bl3','#br3'], {
       strokeDashoffset:0, duration:0.46, ease:'power2.out', stagger:0.06,
-    }, 4.95)
+    }, 3.80)
     .to(['#bl4','#br4'], {
       strokeDashoffset:0, duration:0.40, ease:'power2.out', stagger:0.06,
-    }, 5.20)
+    }, 4.05)
 
     /* Rama central (hacia arriba) */
     .to('#bcenter', {
       strokeDashoffset:0, duration:0.50, ease:'power2.out',
-    }, 5.10)
+    }, 3.95)
 
-    /* Ramitas terminales (todas a la vez, muy rápido) */
+    /* Ramitas terminales */
     .to(['#tw-l1a','#tw-l1b','#tw-l2a','#tw-l2b','#tw-l3',
          '#tw-r1a','#tw-r1b','#tw-r2a','#tw-r2b','#tw-r3','#tw-c'], {
       strokeDashoffset:0, duration:0.35, ease:'power1.out',
       stagger:{ each:0.04, from:'random' },
-    }, 5.50)
+    }, 4.35)
 
   /* ══════════════════════════════════
      FASE 4 · FOLLAJE (500 hojas de corazón)
-     FIX #5: corazones sólidos, suficientes
-     para cubrir todas las ramas
   ══════════════════════════════════ */
-    .call(generateLeaves, null, 5.90)
+    .call(generateLeaves, null, 4.75)
 
   /* ══════════════════════════════════
      FASE 5 · DESPLAZAMIENTO + TEXTO
@@ -538,11 +483,11 @@ function runMasterTimeline() {
       xPercent: 25,
       duration: 1.35,
       ease:     'power3.inOut',
-    }, 9.2)
+    }, 8.1)
 
     /* Aparición del bloque de texto */
-    .to(textLayer, { opacity:1, duration:0.45, ease:'power2.out' }, 9.85)
-    .to(textOrn,   { opacity:1, y:0, duration:0.55, ease:'back.out(1.5)' }, 10.0)
+    .to(textLayer, { opacity:1, duration:0.45, ease:'power2.out' }, 8.75)
+    .to(textOrn,   { opacity:1, y:0, duration:0.55, ease:'back.out(1.5)' }, 8.90)
 
     /* FIX #6: typewriter con 68ms/char empieza aquí */
     .call(function() {
@@ -563,12 +508,12 @@ function runMasterTimeline() {
           startCounter();   /* Inicia el tick de segundos */
         }, 460);
       });
-    }, null, 10.45)
+    }, null, 9.30)
 
   /* ══════════════════════════════════
      FASE 6 · CAÍDA DE HOJAS (cierre)
   ══════════════════════════════════ */
-    .call(dropLeaves, null, 14.5);
+    .call(dropLeaves, null, 13.5);
 
   return master;
 }
