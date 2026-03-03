@@ -1,12 +1,12 @@
 /* ================================================================
-   VALENTINE TREE — style.css  |  Mobile-first 390×844px
+   TE AMO — style.css   |   Mobile-first 390×844px
 ================================================================ */
 :root {
   --cream:      #f7edea;
   --red-deep:   #c8001c;
   --red-mid:    #e8102e;
-  --bark-dark:  #2e1205;
-  --bark-mid:   #6b3210;
+  --red-light:  #ff607a;
+  --bark:       #7a3e14;
   --text:       #3d1a0a;
   --text-light: #7a4030;
 }
@@ -17,17 +17,16 @@ html, body {
   width:100%; height:100%;
   overflow:hidden;
   background: var(--cream);
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family:'Cormorant Garamond', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   touch-action: none;
   overscroll-behavior: none;
 }
 
-/* Grain de textura sutil */
+/* Grain sutil */
 body::before {
-  content:'';
-  position:fixed; inset:0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events:none; z-index:999; opacity:.5;
 }
 
@@ -35,26 +34,24 @@ body::before {
 #ground-line {
   position:fixed; bottom:0; left:0; right:0; height:2px;
   background: linear-gradient(90deg,
-    transparent 0%, var(--bark-dark) 20%,
-    var(--bark-mid) 50%, var(--bark-dark) 80%, transparent 100%);
-  opacity:0; z-index:2;
-  transform: scaleX(0);
-  transform-origin: center;
+    transparent 0%, var(--bark) 20%, #9a4e1a 50%, var(--bark) 80%, transparent 100%);
+  opacity:0; z-index:2; transform:scaleX(0); transform-origin:center;
 }
 
-/* INTRO */
+/* ══ INTRO ══ */
 #intro-layer {
   position:fixed; inset:0;
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
-  gap: clamp(1.2rem,4vh,2rem);
+  gap: clamp(1.4rem,5vh,2.4rem);
   z-index:50;
 }
 
+/* FIX #2: Corazón más pequeño */
 #morph-wrap {
   position:relative;
-  width: clamp(110px,32vw,150px);
-  height: clamp(110px,32vw,150px);
+  width:  clamp(70px,18vw,90px);   /* reducido respecto a la versión anterior */
+  height: clamp(70px,18vw,90px);
   cursor:pointer;
   -webkit-tap-highlight-color: transparent;
   user-select:none;
@@ -71,27 +68,29 @@ body::before {
 
 @keyframes heartbeat {
   0%,100% { transform:scale(1.00); }
-  14%     { transform:scale(1.13); }
+  14%     { transform:scale(1.14); }
   28%     { transform:scale(1.05); }
-  42%     { transform:scale(1.15); }
+  42%     { transform:scale(1.16); }
   70%     { transform:scale(1.00); }
 }
 
-/* Círculo oculto al inicio */
 #circle-svg { opacity:0; }
 
+/* FIX #3: "Te amo" — grande, elegante, Dancing Script */
 #tap-hint {
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-size: clamp(.88rem,3.2vw,1.05rem);
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 8vw, 2.8rem);
+  font-weight: 600;
   color: var(--red-mid);
-  letter-spacing:.12em;
-  opacity:0;
-  animation: fadeHint .9s ease-out 2s forwards;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  text-shadow: 0 2px 12px rgba(232,16,46,0.25);
+  animation: fadeHint 1.0s ease-out 1.8s forwards;
 }
+
 @keyframes fadeHint { to { opacity:1; } }
 
-/* ÁRBOL */
+/* ══ ÁRBOL ══ */
 #tree-layer {
   position:fixed; inset:0;
   pointer-events:none; z-index:10; opacity:0;
@@ -99,12 +98,17 @@ body::before {
 }
 
 #tree-svg {
-  width: clamp(280px,90vw,420px);
+  width: clamp(300px,85vw,440px);
   height:auto; max-height:100vh;
   overflow:visible;
 }
 
-/* HOJAS */
+/* FIX #4: Todos los paths del árbol OCULTOS por defecto en CSS */
+#tree-svg .treepath {
+  opacity: 0;
+}
+
+/* ══ HOJAS ══ */
 #leaves-layer {
   position:fixed; inset:0;
   pointer-events:none; z-index:20; overflow:visible;
@@ -117,32 +121,32 @@ body::before {
   will-change:transform,opacity;
 }
 
-/* TEXTO */
+/* ══ TEXTO ══ */
 #text-layer {
   position:fixed; inset:0;
   display:flex; flex-direction:column; justify-content:center;
-  padding: clamp(1.2rem,5vw,2rem) clamp(.8rem,4vw,1.5rem)
-           clamp(1.2rem,5vw,2rem) clamp(1rem,5vw,1.8rem);
+  padding: clamp(1rem,4vw,1.8rem) clamp(.8rem,3.5vw,1.4rem)
+           clamp(1rem,4vw,1.8rem) clamp(.9rem,4vw,1.6rem);
   z-index:30; pointer-events:none; opacity:0;
   max-width:52%;
 }
 
 #text-ornament {
   display:flex; align-items:center; gap:.5rem;
-  margin-bottom:.9rem; opacity:0; transform:translateY(6px);
+  margin-bottom:.85rem; opacity:0; transform:translateY(6px);
 }
 .orn-line {
   flex:1; height:1px;
   background:linear-gradient(90deg,transparent,var(--red-mid) 60%,transparent);
 }
-.orn-heart { font-size:clamp(.75rem,2.5vw,.9rem); color:var(--red-mid); }
+.orn-heart { font-size:clamp(.7rem,2.2vw,.88rem); color:var(--red-mid); }
 
-/* Typewriter */
+/* FIX #6: Texto se escribe más lento (controlado en JS con 68ms) */
 #love-text {
   font-family:'Playfair Display',serif;
-  font-size:clamp(.7rem,2.5vw,.92rem);
+  font-size:clamp(.68rem,2.3vw,.9rem);
   font-style:italic; font-weight:400;
-  line-height:1.85; color:var(--text);
+  line-height:1.88; color:var(--text);
   letter-spacing:.015em; min-height:7em;
 }
 #love-text.typing::after {
@@ -154,55 +158,84 @@ body::before {
 
 #love-sig {
   font-family:'Playfair Display',serif;
-  font-size:clamp(.9rem,3vw,1.1rem); font-weight:700;
+  font-size:clamp(.88rem,2.9vw,1.08rem); font-weight:700;
   color:var(--red-deep); letter-spacing:.06em;
-  margin-top:.8rem; opacity:0; transform:translateY(8px);
+  margin-top:.75rem; opacity:0; transform:translateY(8px);
 }
 
 #counter-divider {
-  width:40%; height:1px;
-  background:#e8ccc6;
-  margin:.9rem 0; opacity:0;
+  width:45%; height:1px;
+  background:#e8ccc6; margin:.85rem 0; opacity:0;
 }
 
+/* FIX #1: Años/Meses/Días */
 #counter-wrap {
   display:flex; align-items:center;
-  gap:clamp(.3rem,1.5vw,.7rem);
+  gap:clamp(.25rem,1.3vw,.6rem);
   opacity:0; transform:translateY(10px);
 }
 .cu {
   display:flex; flex-direction:column; align-items:center;
   background:rgba(200,0,28,.06);
   border:1px solid rgba(200,0,28,.18);
-  border-radius:10px;
-  padding:clamp(.3rem,1.2vw,.55rem) clamp(.5rem,2vw,.9rem);
-  min-width:clamp(2.8rem,9vw,4rem);
+  border-radius:9px;
+  padding:clamp(.28rem,1vw,.5rem) clamp(.45rem,1.8vw,.85rem);
+  min-width:clamp(2.6rem,8.5vw,3.8rem);
 }
 .cn {
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.3rem,4.5vw,1.8rem); font-weight:700;
+  font-size:clamp(1.2rem,4.2vw,1.7rem); font-weight:700;
   line-height:1; color:var(--red-deep);
 }
 .cl {
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(.52rem,1.6vw,.65rem); font-style:italic;
-  color:var(--text-light); margin-top:.15rem; letter-spacing:.1em;
+  font-size:clamp(.5rem,1.5vw,.62rem); font-style:italic;
+  color:var(--text-light); margin-top:.12rem; letter-spacing:.1em;
 }
 .csep {
-  font-size:clamp(1rem,3vw,1.4rem);
-  color:#e8ccc6; line-height:1;
+  font-size:clamp(.9rem,2.8vw,1.3rem); color:#e8ccc6; line-height:1;
 }
+
+/* FIX #1: Horas/Minutos/Segundos — live ticker */
+#counter-live {
+  display:flex; align-items:center;
+  gap:clamp(.15rem,.8vw,.35rem);
+  margin-top:.5rem;
+  opacity:0; transform:translateY(8px);
+}
+.live-block {
+  display:flex; flex-direction:column; align-items:center;
+  min-width:clamp(1.8rem,6vw,2.8rem);
+}
+.ln {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,3.5vw,1.4rem); font-weight:700;
+  color:var(--red-deep); line-height:1;
+  /* Ancho fijo para que no salte al cambiar dígitos */
+  display:inline-block; min-width:2ch; text-align:center;
+}
+.ll {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.44rem,1.3vw,.56rem); font-style:italic;
+  color:var(--text-light); margin-top:.1rem; letter-spacing:.08em;
+}
+.live-sep {
+  font-size:clamp(.9rem,3vw,1.2rem);
+  color:var(--red-mid); font-weight:700;
+  line-height:1; margin-bottom:.2rem;
+}
+
 #counter-caption {
   font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:clamp(.6rem,1.9vw,.74rem);
+  font-size:clamp(.58rem,1.8vw,.72rem);
   color:var(--text-light); letter-spacing:.08em;
   margin-top:.4rem; opacity:0;
 }
 
-@media (min-width:500px)  { #text-layer { max-width:45%; } }
-@media (min-width:768px)  { #text-layer { max-width:40%; } }
-
+/* Responsive */
+@media (min-width:500px) { #text-layer { max-width:46%; } }
+@media (min-width:768px) { #text-layer { max-width:42%; } }
 @media (prefers-reduced-motion:reduce) {
-  #heart-svg { animation:none; }
-  * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  #heart-svg,#tap-hint { animation:none; }
+  * { animation-duration:.01ms!important; transition-duration:.01ms!important; }
 }
